@@ -12,7 +12,7 @@ args = parser.parse_args()
 start = args.start
 end = args.end + 1
 
-client = bq.Client.from_service_account_json("../bigquery_credentials.json", project="baseball-source")
+client = bq.Client.from_service_account_json("../../bigquery_credentials.json", project="baseball-source")
 
 project_id = "baseball-source"
 dataset_id = "retrosheet"
