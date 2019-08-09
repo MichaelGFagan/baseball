@@ -42,6 +42,18 @@ sources:
 models:
   - name: stg_lahman__batting
     description: This table contains player batting data by season and stint
+    columns:
+      - name: player_id
+        tests:
+          - relationships:
+              to: ref('stg_lahman__people')
+              field: player_id
 
   - name: stg_lahman__people
     description: This table contains biographical information for each person in the Lahman database
+    columns:
+      - name: weight
+        description: weight in pounds
+
+      - name: height
+        description: height in inches
