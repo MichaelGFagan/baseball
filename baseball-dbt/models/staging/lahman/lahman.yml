@@ -1,9 +1,8 @@
 version: 2
 
 sources:
-  - name: baseball_source
+  - name: lahman
     database: baseball-source
     schema: lahman
     tables:
       - name: batting
-        identifier: batting
