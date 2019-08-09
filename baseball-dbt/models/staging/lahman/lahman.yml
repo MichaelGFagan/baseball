@@ -6,3 +6,32 @@ sources:
     schema: lahman
     tables:
       - name: batting
+        tests:
+          - unique:
+              column_name: "concat(yearid, leagueid, teamid, stint, playerid)"
+
+        columns:
+          - name: yeardid
+            tests:
+              - not_null
+
+          - name: leagueid
+            tests:
+              - not_null
+
+          - name: teamid
+            tests:
+              - not_null
+
+          - name: stint
+            tests:
+              - not_null
+
+          - name: playerid
+            tests:
+              - not_null
+
+
+models:
+  - name: stg_lahman__batting
+    description: This table contains player batting data by season and stint
