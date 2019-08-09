@@ -31,7 +31,17 @@ sources:
             tests:
               - not_null
 
+      - name: people
+        columns:
+          - name: playerid
+            tests:
+              - unique
+              - not_null
+
 
 models:
   - name: stg_lahman__batting
     description: This table contains player batting data by season and stint
+
+  - name: stg_lahman__people
+    description: This table contains biographical information for each person in the Lahman database
