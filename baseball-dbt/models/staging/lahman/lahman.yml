@@ -8,14 +8,14 @@ sources:
       - name: batting
         tests:
           - unique:
-              column_name: "concat(yearid, leagueid, teamid, stint, playerid)"
+              column_name: "concat(cast(yearid as string), lgid, teamid, cast(stint as string), playerid)"
 
         columns:
-          - name: yeardid
+          - name: yearid
             tests:
               - not_null
 
-          - name: leagueid
+          - name: lgid
             tests:
               - not_null
 
