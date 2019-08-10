@@ -38,6 +38,18 @@ sources:
               - unique
               - not_null
 
+          - name: ibb
+            description: null prior to 1911
+
+          - name: hbp
+            description: null prior to 1884
+
+          - name: sh
+            description: null prior to 1894
+
+          - name: sf
+            description: null prior to 1911
+
 
 models:
   - name: stg_lahman__batting
@@ -48,6 +60,18 @@ models:
           - relationships:
               to: ref('stg_lahman__people')
               field: player_id
+
+      - name: intentional_walks
+        description: null prior to 1911
+
+      - name: hit_by_pitch
+        description: null prior to 1884
+
+      - name: sacrifice_hits
+        description: null prior to 1894
+
+      - name: sacrifice_flies
+        description: null prior to 1911
 
   - name: stg_lahman__people
     description: This table contains biographical information for each person in the Lahman database
