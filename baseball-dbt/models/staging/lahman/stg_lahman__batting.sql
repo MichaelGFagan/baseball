@@ -43,7 +43,7 @@ final as (
         stint,
         player_id,
         games,
-        ifnull(at_bats, 0) + ifnull(walks, 0) + ifnull(hit_by_pitch, 0), ifnull(sacrifice_hits, 0), ifnull(sacrifice_flies, 0) as plate_appearances,
+        ifnull(at_bats, 0) + ifnull(walks, 0) + ifnull(hit_by_pitch, 0) + ifnull(sacrifice_hits, 0) + ifnull(sacrifice_flies, 0) as plate_appearances,
         at_bats,
         runs,
         hits,
@@ -53,7 +53,7 @@ final as (
         hits + walks + ifnull(hit_by_pitch, 0) as times_on_base,
         at_bats + walks + ifnull(hit_by_pitch, 0) + ifnull(sacrifice_flies, 0) as on_base_denominator,
         (at_bats - hits) + sacrifice_hits + sacrifice_flies + ground_into_double_plays as batting_outs,
-        hits + doubles + 2 * triples + 3 * home_runs as total_bases
+        hits + doubles + 2 * triples + 3 * home_runs as total_bases,
         runs_batted_in,
         stolen_bases,
         caught_stealing,
