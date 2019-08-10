@@ -31,13 +31,6 @@ sources:
             tests:
               - not_null
 
-      - name: people
-        columns:
-          - name: playerid
-            tests:
-              - unique
-              - not_null
-
           - name: ibb
             description: null prior to 1911
 
@@ -49,6 +42,14 @@ sources:
 
           - name: sf
             description: null prior to 1911
+
+      - name: people
+        columns:
+          - name: playerid
+            tests:
+              - unique
+              - not_null
+
 
 
 models:
