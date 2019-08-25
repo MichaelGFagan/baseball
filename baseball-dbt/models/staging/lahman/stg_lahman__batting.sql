@@ -52,7 +52,7 @@ final as (
         home_runs,
         hits + walks + ifnull(hit_by_pitch, 0) as times_on_base,
         at_bats + walks + ifnull(hit_by_pitch, 0) + ifnull(sacrifice_flies, 0) as on_base_denominator,
-        (at_bats - hits) + ifnull(sacrifice_hits, 0) + ifnull(sacrifice_flies, 0) + ifnull(ground_into_double_plays, 0) as batting_outs,
+        (at_bats - hits) + ifnull(sacrifice_hits, 0) + ifnull(sacrifice_flies, 0) + ifnull(ground_into_double_plays, 0) + ifnull(caught_stealing, 0) as outs_made,
         hits + doubles + 2 * triples + 3 * home_runs as total_bases,
         runs_batted_in,
         stolen_bases,
