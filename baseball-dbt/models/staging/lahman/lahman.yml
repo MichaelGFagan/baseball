@@ -70,16 +70,19 @@ sources:
               - not_null
 
           - name: ibb
-            description: null prior to 1911
+            description: null prior to 1955
 
           - name: hbp
             description: null prior to 1884
 
           - name: sh
-            description: null prior to 1894
+            description: null prior to 1970
 
           - name: sf
-            description: null prior to 1911
+            description: null prior to 1970
+
+          - name: gidp
+            description: null prior to 1973
 
       - name: people
         columns:
@@ -122,16 +125,19 @@ models:
               field: person_id
 
       - name: intentional_walks
-        description: null prior to 1911
+        description: null prior to 1955
 
       - name: hit_by_pitch
         description: null prior to 1884
 
       - name: sacrifice_hits
-        description: null prior to 1894
+        description: null prior to 1970
 
       - name: sacrifice_flies
-        description: null prior to 1911
+        description: null prior to 1970
+
+      - name: ground_into_double_plays
+        description: null prior to 1973
 
   - name: stg_lahman__people
     description: This table contains biographical information for each person in the Lahman database
