@@ -7,9 +7,7 @@ with source as (
 renamed as (
 
     select
-        playerid as player_id,
-        retroid as retrosheet_id,
-        bbrefid as bb_ref_id,
+        playerid as person_id,
         namefirst as first_name,
         namelast as last_name,
         namegiven as given_name,
