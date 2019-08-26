@@ -28,14 +28,8 @@ renamed as (
             when wcwin = 'Y' then TRUE
             when wcwin = 'N' then FALSE
         end as is_wild_card_winner,
-        case
-            when lgwin = 'Y' then TRUE
-            when lgwin = 'N' then FALSE
-        end as is_league_champion,
-        case
-            when wswin = 'Y' then TRUE
-            when wswin = 'N' then FALSE
-        end as is_world_series_champion,
+        lgwin as is_league_champion,
+        wswin as is_world_series_champion,
         r as runs_scored,
         ab as at_bats,
         h as hits,
