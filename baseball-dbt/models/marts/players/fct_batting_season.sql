@@ -7,7 +7,7 @@ with batting as (
 select
     b.person_id,
     b.year_id,
-    b.sting,
+    b.stint,
     b.team_id,
     b.league_id,
     b.games,
