@@ -39,7 +39,7 @@ select
     round(b.home_runs / b.plate_appearances, 3) as home_run_rate,
     round(b.extra_base_hits / b.plate_appearances, 3) as extra_base_hit_rate,
     round(b.strikeouts / b.plate_appearances, 3) as strikeout_rate,
-    round(b.walks / b.plate_appearances, 3) as walk_rate
+    round(b.walks / b.plate_appearances, 3) as walk_rate,
     round(b.walks / b.strikeouts, 1) as walk_to_strikeout_ratio,
     round(b.strikeouts / b.walks, 1) as strikeout_to_walk_ratio
 
