@@ -17,7 +17,7 @@ select
     b.triples,
     b.home_runs,
     b.times_on_base,
-    b.batting_outs,
+    b.outs_made,
     b.extra_base_hits,
     b.total_bases,
     b.runs_batted_in,
