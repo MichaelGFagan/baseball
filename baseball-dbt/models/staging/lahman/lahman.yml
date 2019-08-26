@@ -91,7 +91,23 @@ sources:
               - unique
               - not_null
 
+      - name: teams
+        columns:
+          - name: yearid
+            tests:
+              - not_null
 
+          - name: lgid
+            tests:
+              - not_null
+
+          - name: teamid
+            tests:
+              - not_null
+
+          - name: franchid
+            tests:
+              - not_null
 
 models:
   - name: stg_lahman__batting
@@ -147,3 +163,6 @@ models:
 
       - name: height
         description: height in inches
+
+  - name: stg_lahman_teams
+    description: This table contains annual team information 
