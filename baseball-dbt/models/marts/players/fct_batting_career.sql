@@ -6,7 +6,7 @@ with batting as (
 
 select
     b.person_id,
-    count(distinct b.year_id) as seasons,
+    {# count(distinct b.year_id) as seasons, #}
     -- count(distinct )
     b.games,
     b.plate_appearances,
