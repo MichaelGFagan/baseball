@@ -1,6 +1,6 @@
 with batting as (
 
-    select * from {{ ref('stg_lahman_batting') }}
+    select * from {{ ref('stg_lahman__batting') }}
 
 )
 
