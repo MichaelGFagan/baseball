@@ -51,12 +51,30 @@ select
     b.hit_by_pitch,
     b.sacrifice_hits,
     b.sacrifice_flies,
-    b.ground_into_double_plays
-    {# round(b.home_runs / b.plate_appearances, 3) as home_run_rate,
-    round(b.extra_base_hits / b.plate_appearances, 3) as extra_base_hit_rate,
-    round(b.strikeouts / b.plate_appearances, 3) as strikeout_rate,
-    round(b.walks / b.plate_appearances, 3) as walk_rate,
-    round(b.walks / b.strikeouts, 1) as walk_to_strikeout_ratio,
-    round(b.strikeouts / b.walks, 1) as strikeout_to_walk_ratio #}
+    b.ground_into_double_plays,
+    case
+        when b.plate_appearances = 0 then round(0, 3)
+        else round(b.home_runs / b.plate_appearances, 3)
+    end as home_run_rate,
+    case
+        when b.plate_appearances = 0 then round(0, 3)
+        else round(b.extra_base_hits / b.plate_appearances, 3)
+    end as extra_base_hit_rate,
+    case
+        when b.plate_appearances = 0 then round(0, 3)
+        else round(b.strikeouts / b.plate_appearances, 3)
+    end as strikeout_rate,
+    case
+        when b.plate_appearances = 0 then round(0, 3)
+        else round(b.walks / b.plate_appearances, 3)
+    end as walk_rate,
+    case
+        when b.strikeouts = 0 then round(0, 2)
+        else round(b.walks / b.strikeouts, 2)
+    end as walk_to_strikeout_ratio,
+    case
+        when b.walks = 0 then round(0, 2)
+        else round(b.strikeouts / b.walks, 2)
+    end as strikeout_to_walk_ratio
 
 from batting as b
