@@ -27,3 +27,5 @@ select
     sum(ifnull(a.games_as_pinch_runner, 0)) as games_as_pinch_runner
 
 from appearances as a
+
+group by a.person_id
