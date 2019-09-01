@@ -27,14 +27,14 @@ renamed as (
         hr as home_runs,
         bb as walks,
         so as strikeouts,
-        cast(intentional_walks as int64) as intentional_walks,
+        cast(ibb as int64) as intentional_walks,
         wp as wild_pitches,
         hbp as hit_by_pitch,
         bk as balks,
         bfp as batters_faced,
-        cast(sacrifice_hits as int64) as sacrifice_hits,
-        cast(sacrifice_flies as int64) as sacrifice_flies,
-        cast(ground_into_double_plays as int64) as ground_into_double_plays
+        cast(sh as int64) as sacrifice_hits,
+        cast(sf as int64) as sacrifice_flies,
+        cast(gidp as int64) as ground_into_double_plays
 
     from source
 
