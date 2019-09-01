@@ -137,6 +137,7 @@ sources:
               - not_null
 
       - name: fielding_of
+        tests:
           - unique:
               column_name: "concat(cast(yearid as string), cast(stint as string), playerid)"
 
