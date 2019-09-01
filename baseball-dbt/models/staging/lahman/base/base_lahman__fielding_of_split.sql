@@ -20,10 +20,10 @@ renamed as (
         a as assists,
         e as errors,
         dp as double_plays,
-        pb as passed_balls,
+        cast(pb as int64) as passed_balls,
         cast(wp as int64) as wild_pitches,
-        sb as stolen_bases_allowed,
-        cs as caught_stealing,
+        cast(sb as int64) as stolen_bases_allowed,
+        cast(cs as int64) as caught_stealing,
         cast(zr as int64) as zone_rating
 
     from source
