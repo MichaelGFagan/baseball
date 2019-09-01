@@ -8,71 +8,71 @@ select
     b.person_id,
     count(distinct b.year_id) as seasons,
     -- count(distinct )
-    sum(b.games) as games,
-    sum(b.plate_appearances) as plate_appearances,
-    sum(b.at_bats) as at_bats,
-    sum(b.runs) as runs,
-    sum(b.hits) as hits,
-    sum(b.doubles) as doubles,
-    sum(b.triples) as triples,
-    sum(b.home_runs) as home_runs,
-    sum(b.times_on_base) as times_on_base,
-    sum(b.outs_made) as outs_made,
-    sum(b.extra_base_hits) as extra_base_hits,
-    sum(b.total_bases) as total_bases,
-    sum(b.runs_batted_in) as runs_batted_in,
-    sum(b.stolen_bases) as stolen_bases,
-    sum(b.caught_stealing) as caught_stealing,
-    sum(b.walks) as walks,
-    sum(b.strikeouts) as strikeouts,
+    sum(ifnull(b.games, 0)) as games,
+    sum(ifnull(b.plate_appearances, 0)) as plate_appearances,
+    sum(ifnull(b.at_bats, 0)) as at_bats,
+    sum(ifnull(b.runs, 0)) as runs,
+    sum(ifnull(b.hits, 0)) as hits,
+    sum(ifnull(b.doubles, 0)) as doubles,
+    sum(ifnull(b.triples, 0)) as triples,
+    sum(ifnull(b.home_runs, 0)) as home_runs,
+    sum(ifnull(b.times_on_base, 0)) as times_on_base,
+    sum(ifnull(b.outs_made, 0)) as outs_made,
+    sum(ifnull(b.extra_base_hits, 0)) as extra_base_hits,
+    sum(ifnull(b.total_bases, 0)) as total_bases,
+    sum(ifnull(b.runs_batted_in, 0)) as runs_batted_in,
+    sum(ifnull(b.stolen_bases, 0)) as stolen_bases,
+    sum(ifnull(b.caught_stealing, 0)) as caught_stealing,
+    sum(ifnull(b.walks, 0)) as walks,
+    sum(ifnull(b.strikeouts, 0)) as strikeouts,
     case
-        when sum(b.at_bats) = 0 then round(0, 3)
-        else round(sum(b.hits) / sum(b.at_bats), 3)
+        when sum(ifnull(b.at_bats, 0)) = 0 then round(0, 3)
+        else round(sum(ifnull(b.hits, 0)) / sum(ifnull(b.at_bats, 0)), 3)
     end as batting_average,
     case
-        when sum(b.on_base_denominator) = 0 then round(0, 3)
-        else round(sum(b.times_on_base) / sum(b.on_base_denominator), 3)
+        when sum(ifnull(b.on_base_denominator, 0)) = 0 then round(0, 3)
+        else round(sum(ifnull(b.times_on_base, 0)) / sum(ifnull(b.on_base_denominator, 0)), 3)
     end as on_base_percentage,
     case
-        when sum(b.at_bats) = 0 then round(0, 3)
-        else round(sum(b.total_bases) / sum(b.at_bats), 3)
+        when sum(ifnull(b.at_bats, 0)) = 0 then round(0, 3)
+        else round(sum(ifnull(b.total_bases, 0)) / sum(ifnull(b.at_bats, 0)), 3)
     end as slugging_percentage,
     case
-        when sum(b.on_base_denominator) = 0 then 0
-        else round(sum(b.times_on_base) / sum(b.on_base_denominator), 3)
+        when sum(ifnull(b.on_base_denominator, 0)) = 0 then 0
+        else round(sum(ifnull(b.times_on_base, 0)) / sum(ifnull(b.on_base_denominator, 0)), 3)
     end +
     case
-        when sum(b.at_bats) = 0 then 0
-        else round(sum(b.total_bases) / sum(b.at_bats), 3)
+        when sum(ifnull(b.at_bats, 0)) = 0 then 0
+        else round(sum(ifnull(b.total_bases, 0)) / sum(ifnull(b.at_bats, 0)), 3)
     end as on_base_plus_slugging,
-    sum(b.intentional_walks) as intentional_walks,
-    sum(b.hit_by_pitch) as hit_by_pitch,
-    sum(b.sacrifice_hits) as sacrifice_hits,
-    sum(b.sacrifice_flies) as sacrifice_flies,
-    sum(b.ground_into_double_plays) as ground_into_double_plays,
+    sum(ifnull(b.intentional_walks, 0)) as intentional_walks,
+    sum(ifnull(b.hit_by_pitch, 0)) as hit_by_pitch,
+    sum(ifnull(b.sacrifice_hits, 0)) as sacrifice_hits,
+    sum(ifnull(b.sacrifice_flies, 0)) as sacrifice_flies,
+    sum(ifnull(b.ground_into_double_plays, 0)) as ground_into_double_plays,
     case
-        when sum(b.plate_appearances) = 0 then round(0, 3)
-        else round(sum(b.home_runs) / sum(b.plate_appearances), 3)
+        when sum(ifnull(b.plate_appearances, 0)) = 0 then round(0, 3)
+        else round(sum(ifnull(b.home_runs, 0)) / sum(ifnull(b.plate_appearances, 0)), 3)
     end as home_run_rate,
     case
-        when sum(b.plate_appearances) = 0 then round(0, 3)
-        else round(sum(b.extra_base_hits) / sum(b.plate_appearances), 3)
+        when sum(ifnull(b.plate_appearances, 0)) = 0 then round(0, 3)
+        else round(sum(ifnull(b.extra_base_hits, 0)) / sum(ifnull(b.plate_appearances, 0)), 3)
     end as extra_base_hit_rate,
     case
-        when sum(b.plate_appearances) = 0 then round(0, 3)
-        else round(sum(b.strikeouts) / sum(b.plate_appearances), 3)
+        when sum(ifnull(b.plate_appearances, 0)) = 0 then round(0, 3)
+        else round(sum(ifnull(b.strikeouts, 0)) / sum(ifnull(b.plate_appearances, 0)), 3)
     end as strikeout_rate,
     case
-        when sum(b.plate_appearances) = 0 then round(0, 3)
-        else round(sum(b.walks) / sum(b.plate_appearances), 3)
+        when sum(ifnull(b.plate_appearances, 0)) = 0 then round(0, 3)
+        else round(sum(ifnull(b.walks, 0)) / sum(ifnull(b.plate_appearances, 0)), 3)
     end as walk_rate,
     case
-        when sum(b.strikeouts) = 0 then round(0, 2)
-        else round(sum(b.walks) / sum(b.strikeouts), 2)
+        when sum(ifnull(b.strikeouts, 0)) = 0 then round(0, 2)
+        else round(sum(ifnull(b.walks, 0)) / sum(ifnull(b.strikeouts, 0)), 2)
     end as walk_to_strikeout_ratio,
     case
-        when sum(b.walks) = 0 then round(0, 2)
-        else round(sum(b.strikeouts) / sum(b.walks), 2)
+        when sum(ifnull(b.walks, 0)) = 0 then round(0, 2)
+        else round(sum(ifnull(b.strikeouts, 0)) / sum(ifnull(b.walks, 0)), 2)
     end as strikeout_to_walk_ratio
 
 from batting as b
