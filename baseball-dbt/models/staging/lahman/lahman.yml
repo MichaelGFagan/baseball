@@ -216,5 +216,20 @@ models:
       - name: height
         description: height in inches
 
+  - name: stg_lahman__fielding
+    description: This table contains fielding data by season and stint
+    columns:
+      - name: person_id
+        tests:
+          - relationships:
+              to: ref('stg_lahman__people')
+              field: person_id
+
+      - name: position
+        description: OF data combined pre 1954
+
+      - name: games_started
+        description: null for some records between 1873 and 1968
+
   - name: stg_lahman_teams
     description: This table contains annual team information
