@@ -7,7 +7,7 @@ with batting as (
 select
     b.person_id,
     count(distinct b.year_id) as seasons,
-    -- count(distinct )
+    count(distinct b.team_id) as teams,
     sum(ifnull(b.games, 0)) as games,
     sum(ifnull(b.plate_appearances, 0)) as plate_appearances,
     sum(ifnull(b.at_bats, 0)) as at_bats,
