@@ -27,53 +27,17 @@ renamed as (
         hr as home_runs,
         bb as walks,
         so as strikeouts,
-        ibb as intentional_walks,
+        cast(intentional_walks as int64) as intentional_walks,
         wp as wild_pitches,
         hbp as hit_by_pitch,
         bk as balks,
         bfp as batters_faced,
-        sh as sacrifice_hits,
-        sf as sacrifice_flies,
-        gidp as ground_into_double_plays
-
-    from source
-
-),
-
-final as (
-
-    select
-        year_id,
-        league_id,
-        team_id,
-        stint,
-        person_id,
-        wins,
-        losses,
-        games,
-        games_started,
-        games_finished,
-        complete_games,
-        shutouts,
-        saves,
-        outs_pitched,
-        hits,
-        runs,
-        earned_runs,
-        home_runs,
-        walks,
-        strikeouts,
-        cast(intentional_walks as int64) as intentional_walks,
-        wild_pitches,
-        hit_by_pitch,
-        balks,
-        batters_faced,
         cast(sacrifice_hits as int64) as sacrifice_hits,
         cast(sacrifice_flies as int64) as sacrifice_flies,
         cast(ground_into_double_plays as int64) as ground_into_double_plays
 
-    from renamed
+    from source
 
 )
 
-select * from final
+select * from renamed
