@@ -84,6 +84,32 @@ sources:
           - name: gidp
             description: null prior to 1973
 
+      - name: fielding
+        tests:
+          - unique:
+              column_name: "concat(cast(yearid as string), lgid, teamid, cast(stint as string), playerid)"
+
+        columns:
+          - name: yearid
+            tests:
+              - not_null
+
+          - name: lgid
+            tests:
+              - not_null
+
+          - name: teamid
+            tests:
+              - not_null
+
+          - name: stint
+            tests:
+              - not_null
+
+          - name: playerid
+            tests:
+              - not_null
+
       - name: people
         columns:
           - name: playerid
@@ -165,4 +191,4 @@ models:
         description: height in inches
 
   - name: stg_lahman_teams
-    description: This table contains annual team information 
+    description: This table contains annual team information
