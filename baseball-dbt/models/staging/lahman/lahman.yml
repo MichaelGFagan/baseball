@@ -110,6 +110,28 @@ sources:
             tests:
               - not_null
 
+      - name: appearances
+        tests:
+          - unique:
+              column_name: "concat(cast(yearid as string), lgid, teamid, playerid)"
+
+        columns:
+          - name: yearid
+            tests:
+              - not_null
+
+          - name: lgid
+            tests:
+              - not_null
+
+          - name: teamid
+            tests:
+              - not_null
+
+          - name: playerid
+            tests:
+              - not_null
+
       - name: fielding_of_split
         tests:
           - unique:
@@ -249,6 +271,15 @@ models:
 
       - name: games_started
         description: null for some records between 1873 and 1968
+
+  - name: stg_lahman__appearances
+    description: This table contains appearance data by season and team
+    columns:
+      - name: person_id
+        tests:
+          - relationships:
+              to: ref('stg_lahman__people')
+              field: person_id
 
   - name: stg_lahman_teams
     description: This table contains annual team information
