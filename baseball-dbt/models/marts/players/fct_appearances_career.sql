@@ -6,8 +6,8 @@ with appearances as (
 
 select
     a.person_id,
-    count(distinct a.year_id as seasons,
-    count(distinct a.team_id as teams,
+    count(distinct a.year_id) as seasons,
+    count(distinct a.team_id) as teams,
     sum(ifnull(games, 0) as games,
     sum(ifnull(games_started, 0) as games_started,
     sum(ifnull(games_batted, 0) as games_batted,
