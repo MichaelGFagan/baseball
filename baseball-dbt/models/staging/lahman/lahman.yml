@@ -185,7 +185,7 @@ sources:
               - not_null
 
       - name: franchises
-        identifier: teamsfranchises
+        identifier: teams_franchises
         columns:
           - name: franchid
             tests:
