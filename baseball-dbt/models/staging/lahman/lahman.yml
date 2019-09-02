@@ -184,6 +184,14 @@ sources:
               - unique
               - not_null
 
+      - name: franchises
+        identifier: teamsfranchises
+        columns:
+          - name: franchid
+            tests:
+              - unique
+              - not_null
+
       - name: teams
         columns:
           - name: yearid
