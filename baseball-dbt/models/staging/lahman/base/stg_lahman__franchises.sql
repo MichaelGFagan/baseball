@@ -7,13 +7,13 @@ with source as (
 renamed as (
 
     select
-        franchid as franchise_id,
-        franchname as franchise_name,
+        string_field_0 as franchise_id,
+        string_field_1 as franchise_name,
         case
-            when active = 'Y' then TRUE
+            when string_field_2 = 'Y' then TRUE
             else FALSE
         end as is_active,
-        naassoc as national_association_team_id
+        string_field_3 as national_association_team_id
 
     from source
 
