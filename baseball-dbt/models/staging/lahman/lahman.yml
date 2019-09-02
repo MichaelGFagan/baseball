@@ -291,3 +291,6 @@ models:
 
   - name: stg_lahman_teams
     description: This table contains annual team information
+
+  - name: stg_lahman_franchises
+    description: This table contains franchise information
