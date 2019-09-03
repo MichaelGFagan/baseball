@@ -69,11 +69,11 @@ select
     case
         when sum(ifnull(b.strikeouts, 0)) = 0 then round(0, 2)
         else round(sum(ifnull(b.walks, 0)) / sum(ifnull(b.strikeouts, 0)), 2)
-    end as walk_to_strikeout_ratio,
+    end as walk_per_strikeout,
     case
         when sum(ifnull(b.walks, 0)) = 0 then round(0, 2)
         else round(sum(ifnull(b.strikeouts, 0)) / sum(ifnull(b.walks, 0)), 2)
-    end as strikeout_to_walk_ratio
+    end as strikeout_per_walk
 
 from batting as b
 
