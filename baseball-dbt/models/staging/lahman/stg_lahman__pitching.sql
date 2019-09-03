@@ -29,7 +29,7 @@ renamed as (
         so as strikeouts,
         cast(ibb as int64) as intentional_walks,
         wp as wild_pitches,
-        hbp as hit_by_pitch,
+        cast(hbp as int64) as hit_by_pitch,
         bk as balks,
         bfp as batters_faced,
         cast(sh as int64) as sacrifice_hits,
