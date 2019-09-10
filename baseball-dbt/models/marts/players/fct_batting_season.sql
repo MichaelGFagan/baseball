@@ -2,6 +2,12 @@ with batting as (
 
     select * from {{ ref('stg_lahman__batting') }}
 
+),
+
+teams as (
+
+    select * from {{ ref('stg_lahman__teams') }}
+
 )
 
 select
@@ -9,6 +15,7 @@ select
     b.year_id,
     b.stint,
     b.team_id,
+    t.franchise_id,
     b.league_id,
     b.games,
     b.plate_appearances,
@@ -78,3 +85,4 @@ select
     end as strikeout_per_walk
 
 from batting as b
+left join teams as t using (year_id, team_id)

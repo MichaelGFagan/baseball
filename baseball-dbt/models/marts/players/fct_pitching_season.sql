@@ -2,6 +2,12 @@ with pitching as (
 
     select * from {{ ref('stg_lahman__pitching') }}
 
+),
+
+teams as (
+
+    select * from {{ ref('stg_lahman__teams') }}
+
 )
 
 select
@@ -9,6 +15,7 @@ select
     p.year_id,
     p.stint,
     p.team_id,
+    t.franchise_id,
     p.league_id,
     p.wins,
     p.losses,
@@ -49,3 +56,4 @@ select
     round(p.home_runs / p.batters_faced, 3) as home_run_rate
 
 from pitching as p
+left join teams as t using (year_id, team_id)
