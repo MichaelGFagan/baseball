@@ -39,7 +39,7 @@ select
     round(p.runs / p.outs_pitched * 27, 2) as run_average,
     round(p.earned_runs / p.outs_pitched * 27, 2) as earned_run_average,
     -- FIP: (13 * p.home_runs + 3 * (walks + hit_by_pitch) - 2 * p.strikeouts) / p.batters_faced * 27 + constant as fielding_independent_pitching,
-    (p.walks + p.hits) * 3 / p.outs_pitched as whip,
+    round((p.walks + p.hits) * 3 / p.outs_pitched, 3) as whip,
     round(p.hits / p.outs_pitched * 27, 1) as hits_per_nine,
     round(p.home_runs / p.outs_pitched * 27, 1) as home_runs_per_nine,
     round(p.walks / p.outs_pitched * 27, 1) as walks_per_nine,
