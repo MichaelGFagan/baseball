@@ -12,7 +12,7 @@ renamed as (
         teamid as team_id,
         lgid as league_id,
         inseason as order_in_season,
-        g as gams,
+        g as games,
         w as wins,
         l as losses,
         rank as position_in_standings,
