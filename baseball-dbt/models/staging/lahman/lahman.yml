@@ -176,6 +176,23 @@ sources:
             tests:
               - not_null
 
+      - name: managers
+        tests:
+          - unique:
+              column_name: "concat(playerid, cast(yearid as string), teamid, cast(inseason as string))"
+
+        columns:
+          - name: playerid
+            tests:
+              - not_null
+
+          - name: yearid
+            tests:
+              - not_null
+
+          - name: teamid
+            tests:
+              - not_null
 
       - name: people
         columns:
@@ -289,8 +306,11 @@ models:
               to: ref('stg_lahman__people')
               field: person_id
 
-  - name: stg_lahman_teams
+  - name: stg_lahman__teams
     description: This table contains annual team information
 
-  - name: stg_lahman_franchises
+  - name: stg_lahman__franchises
     description: This table contains franchise information
+
+  - name: stg_lahman__managers
+    description: This table contains manager information
