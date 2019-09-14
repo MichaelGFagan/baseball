@@ -209,6 +209,17 @@ sources:
               - unique
               - not_null
 
+      - name: salaries
+        tests:
+          - unique:
+              column_name: "concat(playerid, cast(yearid as string), teamid, cast(inseason as string))"
+          - not_null:
+              column_name: yearid
+              column_name: teamid
+              column_name: lgid
+              column_name: playerid
+              column_name: salary
+
       - name: teams
         columns:
           - name: yearid
@@ -314,3 +325,6 @@ models:
 
   - name: stg_lahman__managers
     description: This table contains manager information
+
+  - name: stg_lahman__salaries
+    description: This table contains player salary information since 1985
