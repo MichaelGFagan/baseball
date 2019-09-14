@@ -23,7 +23,7 @@ sums as (
         sum(m.losses) as losses
 
     from managers as m
-    join teams as t using (team_id)
+    join teams as t using (team_id, year_id)
 
     group by 1
 
