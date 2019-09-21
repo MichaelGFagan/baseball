@@ -12,6 +12,6 @@ batting_post as (
 
 select * from batting
 
-union
+union all
 
 select * from batting_post
