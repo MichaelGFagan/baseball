@@ -45,7 +45,6 @@ select
     s.person_id,
     s.year_id,
     s.is_postseason,
-    s.seasons,
     s.teams,
     s.games,
     s.plate_appearances,
