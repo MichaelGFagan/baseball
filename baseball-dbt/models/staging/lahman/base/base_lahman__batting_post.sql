@@ -1,6 +1,6 @@
 with source as (
 
-    select * from {{ source('lahman', 'batting') }}
+    select * from {{ source('lahman', 'batting_post') }}
 
 ),
 
