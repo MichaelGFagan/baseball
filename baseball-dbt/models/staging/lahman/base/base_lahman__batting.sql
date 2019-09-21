@@ -10,7 +10,7 @@ renamed as (
         yearid as year_id,
         lgid as league_id,
         teamid as team_id,
-        stint,
+        cast(stint as string) as stint,
         playerid as person_id,
         false as is_postseason,
         g as games,
