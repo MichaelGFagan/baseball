@@ -125,6 +125,56 @@ sources:
           - name: gidp
             description: null prior to 1973
 
+      - name: pitching_post
+        tests:
+          - unique:
+              column_name: "concat(cast(yearid as string), lgid, teamid, cast(stint as string), playerid)"
+
+        columns:
+          - name: yearid
+            tests:
+              - not_null
+
+          - name: lgid
+            tests:
+              - not_null
+
+          - name: teamid
+            tests:
+              - not_null
+
+          - name: stint
+            tests:
+              - not_null
+
+          - name: playerid
+            tests:
+              - not_null
+
+          - name: ibb
+            description: null prior to 1903
+
+          - name: wp
+            description: null prior to 1903
+
+          - name: hbp
+            description: null prior to 1903
+
+          - name: bk
+            description: null prior to 1903
+
+          - name: bfp
+            description: null prior to 1903
+
+          - name: sh
+            description: null prior to 1903
+
+          - name: sf
+            description: null prior to 1903
+
+          - name: gidp
+            description: null prior to 1903
+
       - name: fielding
         tests:
           - unique:
@@ -290,7 +340,7 @@ models:
               field: person_id
 
   - name: stg_lahman__pitching
-    description: This table contains player pitching data by season and stint
+    description: This table contains regular and postseason player pitching data
     columns:
       - name: person_id
         tests:
