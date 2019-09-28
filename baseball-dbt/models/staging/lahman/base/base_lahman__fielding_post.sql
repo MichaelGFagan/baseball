@@ -12,6 +12,7 @@ renamed as (
         teamid as team_id,
         round as stint,
         playerid as person_id,
+        true as is_postseason,
         pos as position,
         g as games,
         gs as games_started,
@@ -20,11 +21,12 @@ renamed as (
         a as assists,
         e as errors,
         dp as double_plays,
+        tp as triple_plays,
         pb as passed_balls,
-        cast(wp as int64) as wild_pitches,
-        sb as stolen_bases_allowed,
-        cs as caught_stealing,
-        cast(zr as int64) as zone_rating
+        null as wild_pitches,
+        cast(sb as int64) as stolen_bases_allowed,
+        cast(cs as int64) as caught_stealing,
+        null as zone_rating
 
     from source
 

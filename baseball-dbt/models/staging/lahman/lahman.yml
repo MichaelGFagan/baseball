@@ -201,6 +201,32 @@ sources:
             tests:
               - not_null
 
+      - name: fielding_post
+        tests:
+          - unique:
+              column_name: "concat(cast(yearid as string), lgid, teamid, cast(stint as string), playerid)"
+
+        columns:
+          - name: yearid
+            tests:
+              - not_null
+
+          - name: lgid
+            tests:
+              - not_null
+
+          - name: teamid
+            tests:
+              - not_null
+
+          - name: stint
+            tests:
+              - not_null
+
+          - name: playerid
+            tests:
+              - not_null
+
       - name: appearances
         tests:
           - unique:
