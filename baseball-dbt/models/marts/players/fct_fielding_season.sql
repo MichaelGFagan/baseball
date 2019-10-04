@@ -25,7 +25,7 @@ select
     sum(f.double_plays) as double_plays,
     sum(f.triple_plays) as triple_plays,
     sum(f.passed_balls) as passed_balls,
-    sum(f.wild_picthes) as wild_pitches,
+    sum(f.wild_pitches) as wild_pitches,
     sum(f.stolen_bases_allowed) as stolen_bases_allowed,
     sum(f.caught_stealing) as caught_stealing
 

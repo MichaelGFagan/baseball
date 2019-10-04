@@ -21,7 +21,7 @@ renamed as (
         a as assists,
         e as errors,
         dp as double_plays,
-        null as triples_plays,
+        null as triple_plays,
         pb as passed_balls,
         cast(wp as int64) as wild_pitches,
         sb as stolen_bases_allowed,

@@ -28,7 +28,7 @@ select
     f.double_plays,
     f.triple_plays,
     f.passed_balls,
-    f.wild_picthes,
+    f.wild_pitches,
     f.stolen_bases_allowed,
     f.caught_stealing,
     f.zone_rating
