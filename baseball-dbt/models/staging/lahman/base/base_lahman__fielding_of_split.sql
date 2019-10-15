@@ -7,28 +7,28 @@ with source as (
 renamed as (
 
     select
-        yearid as year_id,
-        lgid as league_id,
-        teamid as team_id,
-        cast(stint as string) as stint,
-        playerid as person_id,
-        false as is_postseason,
-        pos as position,
-        g as games,
-        gs as games_started,
-        innouts as outs_at_position,
-        po as putouts,
-        a as assists,
-        e as errors,
-        dp as double_plays,
+        s.yearid as year_id,
+        s.lgid as league_id,
+        s.teamid as team_id,
+        cast(s.stint as string) as stint,
+        s.playerid as person_id,
+        FALSE as is_postseason,
+        s.pos as position,
+        s.g as games,
+        s.gs as games_started,
+        s.innouts as outs_at_position,
+        s.po as putouts,
+        s.a as assists,
+        s.e as errors,
+        s.dp as double_plays,
         null as triple_plays,
-        cast(pb as int64) as passed_balls,
-        cast(wp as int64) as wild_pitches,
-        cast(sb as int64) as stolen_bases_allowed,
-        cast(cs as int64) as caught_stealing,
-        cast(zr as int64) as zone_rating
+        cast(s.pb as int64) as passed_balls,
+        cast(s.wp as int64) as wild_pitches,
+        cast(s.sb as int64) as stolen_bases_allowed,
+        cast(s.cs as int64) as caught_stealing,
+        cast(s.zr as int64) as zone_rating
 
-    from source
+    from source as s
 
 )
 
