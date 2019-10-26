@@ -7,18 +7,18 @@ with source as (
 renamed as (
 
     select
-        playerid as person_id,
-        yearid as year_id,
-        teamid as team_id,
-        lgid as league_id,
-        inseason as order_in_season,
-        g as games,
-        w as wins,
-        l as losses,
-        rank as position_in_standings,
-        plyrmgr as is_player_manager
+        s.playerid as person_id,
+        s.yearid as year_id,
+        s.teamid as team_id,
+        s.lgid as league_id,
+        s.inseason as order_in_season,
+        s.g as games,
+        s.w as wins,
+        s.l as losses,
+        s.rank as position_in_standings,
+        s.plyrmgr as is_player_manager
 
-    from source
+    from source as s
 
 )
 

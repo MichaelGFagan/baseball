@@ -7,27 +7,27 @@ with source as (
 renamed as (
 
     select
-        playerid as person_id,
-        yearid as year_id,
-        stint,
-        glf as games_at_left_field,
-        gcf as games_at_center_field,
-        grf as games_at_right_field
+        s.playerid as person_id,
+        s.yearid as year_id,
+        s.stint,
+        s.glf as games_at_left_field,
+        s.gcf as games_at_center_field,
+        s.grf as games_at_right_field
 
-    from source
+    from source as s
 
 ),
 
 left_field as (
 
     select
-        person_id,
-        year_id,
-        stint,
+        r.person_id,
+        r.year_id,
+        r.stint,
         'LF' as position,
-        games_at_left_field as games
+        r.games_at_left_field as games
 
-    from renamed
+    from renamed as r
 
     where games_at_left_field is not null and games_at_left_field > 0
 
@@ -36,13 +36,13 @@ left_field as (
 center_field as (
 
     select
-        person_id,
-        year_id,
-        stint,
+        r.person_id,
+        r.year_id,
+        r.stint,
         'CF' as position,
-        games_at_center_field as games
+        r.games_at_center_field as games
 
-    from renamed
+    from renamed as r
 
     where games_at_center_field is not null and games_at_center_field > 0
 
@@ -51,13 +51,13 @@ center_field as (
 right_field as (
 
     select
-        person_id,
-        year_id,
-        stint,
+        r.person_id,
+        r.year_id,
+        r.stint,
         'RF' as position,
-        games_at_right_field as games
+        r.games_at_right_field as games
 
-    from renamed
+    from renamed as r
 
     where games_at_right_field is not null and games_at_right_field > 0
 

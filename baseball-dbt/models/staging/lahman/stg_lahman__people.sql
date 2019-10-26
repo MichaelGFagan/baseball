@@ -7,32 +7,32 @@ with source as (
 renamed as (
 
     select
-        playerid as person_id,
-        namefirst as first_name,
-        namelast as last_name,
-        namegiven as given_name,
-        weight,
-        height,
-        bats,
-        throws,
-        debut as debut_game_date,
-        finalgame as final_game_date,
-        date(birthyear, birthmonth, birthday) as date_of_birth,
-        birthyear as birth_year,
-        birthmonth as birth_month,
-        birthday as birth_day,
-        birthcountry as birth_country,
-        birthstate as birth_state,
-        birthcity as birth_city,
-        date(deathyear, deathmonth, deathday) as date_of_death,
+        s.playerid as person_id,
+        s.namefirst as first_name,
+        s.namelast as last_name,
+        s.namegiven as given_name,
+        s.weight,
+        s.height,
+        s.bats,
+        s.throws,
+        s.debut as debut_game_date,
+        s.finalgame as final_game_date,
+        date(s.birthyear, s.birthmonth, s.birthday) as date_of_birth,
+        s.birthyear as birth_year,
+        s.birthmonth as birth_month,
+        s.birthday as birth_day,
+        s.birthcountry as birth_country,
+        s.birthstate as birth_state,
+        s.birthcity as birth_city,
+        date(s.deathyear, s.deathmonth, s.deathday) as date_of_death,
         deathyear as death_year,
-        deathmonth as death_month,
-        deathday as death_day,
-        deathcountry as death_country,
-        deathstate as death_state,
-        deathcity as death_city
+        s.deathmonth as death_month,
+        s.deathday as death_day,
+        s.deathcountry as death_country,
+        s.deathstate as death_state,
+        s.deathcity as death_city
 
-    from source
+    from source as s
 
 )
 

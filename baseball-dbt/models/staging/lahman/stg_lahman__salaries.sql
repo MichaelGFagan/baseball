@@ -7,13 +7,13 @@ with source as (
 renamed as (
 
     select
-        playerid as person_id,
-        yearid as year_id,
-        teamid as team_id,
-        lgid as league_id,
-        salary
+        s.playerid as person_id,
+        s.yearid as year_id,
+        s.teamid as team_id,
+        s.lgid as league_id,
+        s.salary
 
-    from source
+    from source as s
 
 )
 
