@@ -7,9 +7,9 @@ with source as (
 renamed as (
 
     select
-        s.playerid as person_id,
-        s.yearid as year_id,
+        s.playerid as baseball_reference_id,
         s.stint,
+        s.yearid as year_id,
         s.glf as games_at_left_field,
         s.gcf as games_at_center_field,
         s.grf as games_at_right_field
@@ -21,9 +21,9 @@ renamed as (
 left_field as (
 
     select
-        r.person_id,
+        r.baseball_reference_id,
+        s.stint,
         r.year_id,
-        r.stint,
         'LF' as position,
         r.games_at_left_field as games
 
@@ -36,9 +36,9 @@ left_field as (
 center_field as (
 
     select
-        r.person_id,
-        r.year_id,
+        r.baseball_reference_id,
         r.stint,
+        r.year_id,
         'CF' as position,
         r.games_at_center_field as games
 
@@ -51,9 +51,9 @@ center_field as (
 right_field as (
 
     select
-        r.person_id,
-        r.year_id,
+        r.baseball_reference_id,
         r.stint,
+        r.year_id,
         'RF' as position,
         r.games_at_right_field as games
 

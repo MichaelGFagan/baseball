@@ -7,7 +7,7 @@ with source as (
 renamed as (
 
     select
-        s.playerid as person_id,
+        s.playerid as baseball_reference_id,
         s.namefirst as first_name,
         s.namelast as last_name,
         s.namegiven as given_name,

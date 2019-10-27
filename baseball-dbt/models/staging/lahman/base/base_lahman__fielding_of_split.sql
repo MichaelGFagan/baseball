@@ -7,11 +7,11 @@ with source as (
 renamed as (
 
     select
-        s.yearid as year_id,
-        s.lgid as league_id,
-        s.teamid as team_id,
+        s.playerid as baseball_reference_id,
         cast(s.stint as string) as stint,
-        s.playerid as person_id,
+        s.teamid as team_id,
+        s.lgid as league_id,
+        s.yearid as year_id,
         FALSE as is_postseason,
         s.pos as position,
         s.g as games,

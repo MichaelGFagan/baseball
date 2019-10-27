@@ -7,10 +7,10 @@ with source as (
 renamed as (
 
     select
-        s.yearid as year_id,
-        s.teamid as team_id,
+        s.playerid as baseball_reference_id,
         s.lgid as league_id,
-        s.playerid as person_id,
+        s.teamid as team_id,
+        s.yearid as year_id,
         s.g_all as games,
         s.gs as games_started,
         s.g_batting as games_as_batter,

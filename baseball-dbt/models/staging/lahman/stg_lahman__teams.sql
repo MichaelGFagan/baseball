@@ -7,11 +7,11 @@ with source as (
 renamed as (
 
     select
-        s.yearid as year_id,
-        s.lgid as league_id,
         s.teamid as team_id,
         s.franchid as franchise_id,
         s.divid as division_id,
+        s.lgid as league_id,
+        s.yearid as year_id,
         s.name,
         s.park,
         s.attendance,
