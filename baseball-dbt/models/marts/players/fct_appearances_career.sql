@@ -5,7 +5,7 @@ with appearances as (
 )
 
 select
-    a.person_id,
+    a.baseball_reference_id,
     count(distinct a.year_id) as seasons,
     count(distinct a.team_id) as teams,
     sum(ifnull(a.games, 0)) as games,
@@ -28,4 +28,4 @@ select
 
 from appearances as a
 
-group by a.person_id
+group by 1

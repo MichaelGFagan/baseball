@@ -1,0 +1,19 @@
+version: 2
+
+sources:
+  - name: statcast
+    database: baseball-source
+    schema: statcast
+    tables:
+      - name: statcast_2008
+      - name: statcast_2009
+      - name: statcast_2010
+      - name: statcast_2011
+      - name: statcast_2012
+      - name: statcast_2013
+      - name: statcast_2014
+      - name: statcast_2015
+      - name: statcast_2016
+      - name: statcast_2017
+      - name: statcast_2018
+      - name: statcast_2019

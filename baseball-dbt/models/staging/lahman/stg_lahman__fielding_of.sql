@@ -22,7 +22,7 @@ left_field as (
 
     select
         r.baseball_reference_id,
-        s.stint,
+        r.stint,
         r.year_id,
         'LF' as position,
         r.games_at_left_field as games

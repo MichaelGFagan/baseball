@@ -11,7 +11,7 @@ teams as (
 )
 
 select
-    f.person_id,
+    f.baseball_reference_id,
     f.year_id,
     f.is_postseason,
     f.position,

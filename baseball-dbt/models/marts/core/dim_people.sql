@@ -5,7 +5,7 @@ with people as (
 )
 
 select
-    p.person_id,
+    p.baseball_reference_id,
     p.last_name,
     p.first_name,
     p.given_name,

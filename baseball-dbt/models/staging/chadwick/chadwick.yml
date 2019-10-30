@@ -1,0 +1,22 @@
+version: 2
+
+sources:
+  - name: chadwick
+    database: baseball-source
+    schema: chadwick
+    tables:
+      - name: register
+        columns:
+          - name: key_uuid
+            tests:
+              - not_null
+              - unique
+
+models:
+  - name: stg_chadwick__register
+    description: This table contains cross-reference ids
+    columns:
+      - name: person_id
+        tests:
+          - not_null
+          - unique

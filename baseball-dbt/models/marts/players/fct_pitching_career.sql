@@ -13,7 +13,7 @@ teams as (
 sums as (
 
     select
-        p.person_id,
+        p.baseball_reference_id,
         count(distinct p.year_id) as seasons,
         count(distinct t.franchise_id) as franchises,
         {{ all_null_or_sum('p.wins') }} as wins,
@@ -48,7 +48,7 @@ sums as (
 )
 
 select
-    s.person_id,
+    s.baseball_reference_id,
     s.seasons,
     s.franchises,
     s.wins,

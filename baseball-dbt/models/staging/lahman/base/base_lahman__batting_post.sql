@@ -38,11 +38,11 @@ renamed as (
 final as (
 
     select
-        r.year_id,
-        r.league_id,
-        r.team_id,
+        r.baseball_reference_id,
         r.stint,
-        r.person_id,
+        r.team_id,
+        r.league_id,
+        r.year_id,
         r.is_postseason,
         r.games,
         ifnull(r.at_bats, 0) + ifnull(r.walks, 0) + ifnull(r.hit_by_pitch, 0) + ifnull(r.sacrifice_hits, 0) + ifnull(r.sacrifice_flies, 0) as plate_appearances,

@@ -5,7 +5,7 @@ with salaries as (
 )
 
 select
-    s.person_id,
+    s.baseball_reference_id,
     sum(s.salary) as salary
 
 from salaries as s

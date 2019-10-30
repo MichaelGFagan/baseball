@@ -363,7 +363,7 @@ models:
         tests:
           - relationships:
               to: ref('stg_lahman__people')
-              field: person_id
+              field: baseball_reference_id
 
   - name: stg_lahman__pitching
     description: This table contains regular and postseason player pitching data
@@ -372,7 +372,7 @@ models:
         tests:
           - relationships:
               to: ref('stg_lahman__people')
-              field: person_id
+              field: baseball_reference_id
 
       - name: intentional_walks
         description: null prior to 1955
@@ -405,7 +405,7 @@ models:
         tests:
           - relationships:
               to: ref('stg_lahman__people')
-              field: person_id
+              field: baseball_reference_id
 
       - name: position
         description: OF data combined pre 1954
@@ -420,7 +420,7 @@ models:
         tests:
           - relationships:
               to: ref('stg_lahman__people')
-              field: person_id
+              field: baseball_reference_id
 
   - name: stg_lahman__teams
     description: This table contains annual team information

@@ -5,7 +5,7 @@ with salaries as (
 )
 
 select
-    s.person_id,
+    s.baseball_reference_id,
     s.year_id,
     s.team_id,
     s.league_id,

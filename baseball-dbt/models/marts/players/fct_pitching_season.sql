@@ -7,7 +7,7 @@ with pitching as (
 sums as (
 
     select
-        p.person_id,
+        p.baseball_reference_id,
         p.year_id,
         p.is_postseason,
         count(distinct p.team_id) as teams,
@@ -42,7 +42,7 @@ sums as (
 )
 
 select
-    s.person_id,
+    s.baseball_reference_id,
     s.year_id,
     s.is_postseason,
     s.teams,

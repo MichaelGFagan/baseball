@@ -11,7 +11,7 @@ teams as (
 )
 
 select
-    p.person_id,
+    p.baseball_reference_id,
     p.year_id,
     p.stint,
     p.team_id,
