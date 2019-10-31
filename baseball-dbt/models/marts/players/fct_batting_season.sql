@@ -63,54 +63,20 @@ select
     s.caught_stealing,
     s.walks,
     s.strikeouts,
-    case
-        when s.at_bats = 0 then round(0, 3)
-        else round(s.hits / s.at_bats, 3)
-    end as batting_average,
-    case
-        when s.on_base_denominator = 0 then round(0, 3)
-        else round(s.times_on_base / s.on_base_denominator, 3)
-    end as on_base_percentage,
-    case
-        when s.at_bats = 0 then round(0, 3)
-        else round(s.total_bases / s.at_bats, 3)
-    end as slugging_percentage,
-    case
-        when s.on_base_denominator = 0 then 0
-        else round(s.times_on_base / s.on_base_denominator, 3)
-    end +
-    case
-        when s.at_bats = 0 then 0
-        else round(s.total_bases / s.at_bats, 3)
-    end as on_base_plus_slugging,
+    {{ no_divide_by_zero('s.hits', 's.at_bats', 3) }} as batting_average,
+    {{ no_divide_by_zero('s.times_on_base', 's.on_base_denominator', 3) }} as on_base_percentage,
+    {{ no_divide_by_zero('s.total_bases', 's.at_bats', 3) }} as slugging_percentage,
+    {{ no_divide_by_zero('s.times_on_base', 's.on_base_denominator', 3) }} + {{ no_divide_by_zero('s.total_bases', 's.at_bats', 3) }} as on_base_plus_slugging,
     s.intentional_walks,
     s.hit_by_pitch,
     s.sacrifice_hits,
     s.sacrifice_flies,
     s.ground_into_double_plays,
-    case
-        when s.plate_appearances = 0 then round(0, 3)
-        else round(s.home_runs / s.plate_appearances, 3)
-    end as home_run_rate,
-    case
-        when s.plate_appearances = 0 then round(0, 3)
-        else round(s.extra_base_hits / s.plate_appearances, 3)
-    end as extra_base_hit_rate,
-    case
-        when s.plate_appearances = 0 then round(0, 3)
-        else round(s.strikeouts / s.plate_appearances, 3)
-    end as strikeout_rate,
-    case
-        when s.plate_appearances = 0 then round(0, 3)
-        else round(s.walks / s.plate_appearances, 3)
-    end as walk_rate,
-    case
-        when s.strikeouts = 0 then round(0, 2)
-        else round(s.walks / s.strikeouts, 2)
-    end as walk_per_strikeout,
-    case
-        when s.walks = 0 then round(0, 2)
-        else round(s.strikeouts / s.walks, 2)
-    end as strikeout_per_walk
+    {{ no_divide_by_zero('s.home_runs', 's.plate_appearances', 3) }} as home_run_rate,
+    {{ no_divide_by_zero('s.extra_base_hits', 's.plate_appearances', 3) }} as extra_base_hit_rate,
+    {{ no_divide_by_zero('s.strikeouts', 's.plate_appearances', 3) }} as strikeout_rate,
+    {{ no_divide_by_zero('s.walks', 's.plate_appearances', 3) }} as walk_rate,
+    {{ no_divide_by_zero('s.walks', 's.strikeouts', 3) }} as walk_per_strikeout,
+    {{ no_divide_by_zero('s.strikeouts', 's.walks', 3) }} as strikeout_per_walk
 
 from sums as s

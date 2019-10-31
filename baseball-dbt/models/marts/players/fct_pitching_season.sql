@@ -70,54 +70,19 @@ select
     s.sacrifice_hits,
     s.sacrifice_flies,
     s.ground_into_double_plays,
-    case
-        when (s.batters_faced - s.walks - s.hit_by_pitch - s.sacrifice_hits - s.sacrifice_flies) = 0 then 0
-        else round(s.hits / (s.batters_faced - s.walks - s.hit_by_pitch - s.sacrifice_hits - s.sacrifice_flies), 3)
-    end as batting_average_against,
-    case
-        when (s.batters_faced - s.walks - s.hit_by_pitch - s.sacrifice_hits - s.strikeouts - s.home_runs) = 0 then 0
-        else round((s.hits - s.home_runs) / (s.batters_faced - s.walks - s.hit_by_pitch - s.sacrifice_hits - s.strikeouts - s.home_runs), 3)
-    end as batting_average_on_balls_in_play,
-    case
-        when s.outs_pitched = 0 then 0
-        else round(s.runs / s.outs_pitched * 27, 2)
-    end as run_average,
-    case
-        when s.outs_pitched = 0 then 0
-        else round(s.earned_runs / s.outs_pitched * 27, 2)
-    end as earned_run_average,
+    {{ no_divide_by_zero('s.hits', 's.batters_faced - s.walks - s.hit_by_pitch - s.sacrifice_hits - s.sacrifice_flies', 3) }} as batting_average_against,
+    {{ no_divide_by_zero('s.hits - s.home_runs', 's.batters_faced - s.walks - s.hit_by_pitch - s.sacrifice_hits - s.strikeouts - s.home_runs', 3) }} as batting_average_on_balls_in_play,
+    {{ no_divide_by_zero('s.runs', 's.outs_pitched * 27', 2) }} as run_average,
+    {{ no_divide_by_zero('s.earned_runs', 's.outs_pitched * 27', 2) }} as earned_run_average,
     -- FIP: (13 * s.home_runs + 3 * (walks + hit_by_pitch) - 2 * s.strikeouts) / s.batters_faced * 27 + constant as fielding_independent_pitching,
-    case
-        when s.outs_pitched = 0 then 0
-        else round((s.walks + s.hits) * 3 / s.outs_pitched, 3)
-    end as whip,
-    case
-        when s.outs_pitched = 0 then 0
-        else round(s.hits / s.outs_pitched * 27, 1)
-    end as hits_per_nine,
-    case
-        when s.outs_pitched = 0 then 0
-        else round(s.home_runs / s.outs_pitched * 27, 1)
-    end as home_runs_per_nine,
-    case
-        when s.outs_pitched = 0 then 0
-        else round(s.walks / s.outs_pitched * 27, 1)
-    end as walks_per_nine,
-    case
-        when s.strikeouts = 0 then 0
-        else round(s.walks / s.strikeouts, 2)
-    end as walks_per_strikeout,
-    case
-        when s.batters_faced = 0 then 0
-        else round(s.strikeouts / s.batters_faced, 3)
-    end as strikeout_rate,
-    case
-        when s.batters_faced = 0 then 0
-        else round(s.walks / s.batters_faced, 3)
-    end as walk_rate,
-    case
-        when s.batters_faced = 0 then 0
-        else round(s.home_runs / s.batters_faced, 3)
-    end as home_run_rate
+    {{ no_divide_by_zero('s.walks + s.hits * 3', 's.outs_pitched', 3) }} as whip,
+    {{ no_divide_by_zero('s.hits', 's.outs_pitched * 27', 1) }} as hits_per_nine,
+    {{ no_divide_by_zero('s.home_runs', 's.outs_pitched * 27', 1) }} as home_runs_per_nine,
+    {{ no_divide_by_zero('s.walks', 's.outs_pitched * 27', 1) }} as walks_per_nine,
+    {{ no_divide_by_zero('s.walks', 's.strikeouts', 2) }} as walks_per_strikeout,
+    {{ no_divide_by_zero('s.strikeouts', 's.batters_faced', 3) }} as strikeout_rate,
+    {{ no_divide_by_zero('s.walks', 's.batters_faced', 3) }} as walk_rate,
+    {{ no_divide_by_zero('s.home_runs', 's.batters_faced', 3) }} as home_run_rate
+
 
 from sums as s

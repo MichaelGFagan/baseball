@@ -72,7 +72,6 @@ select
     {{ no_divide_by_zero('s.times_on_base', 's.on_base_denominator', 3) }} as on_base_percentage,
     {{ no_divide_by_zero('s.total_bases', 's.at_bats', 3) }} as slugging_percentage,
     {{ no_divide_by_zero('s.times_on_base', 's.on_base_denominator', 3) }} + {{ no_divide_by_zero('s.total_bases', 's.at_bats', 3) }} as on_base_plus_slugging,
-    {# on_base_percentage + slugging_percentage as ops_test, #}
     s.intentional_walks,
     s.hit_by_pitch,
     s.sacrifice_hits,
