@@ -6,7 +6,7 @@ with people as (
 
 register as (
 
-    select * from {{ ref('stg_chadwick_register') }}
+    select * from {{ ref('stg_chadwick__register') }}
 
 )
 
