@@ -16,7 +16,7 @@ select
     p.bats,
     p.throws,
     p.debut_game_date,
-    p.final_game_date
+    p.final_game_date,
     r.first_pro_game_played,
     r.last_pro_game_played,
     r.first_mlb_game_played,
