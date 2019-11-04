@@ -3,9 +3,12 @@
 renamed as (
 
     select
-        md5(concat(cast(s.sv_id as string), cast(s.game_pk as string))) as statcast_pitch_id,
+        md5(concat(cast(s.game_pk as string), cast(s.index as string))) as statcast_pitch_id,
         cast(s.index as int64) as index,
-        parse_datetime('%y%m%d_%H%M%S', s.sv_id) as pitched_at,
+        case
+            when s.sv_id = '_' then null
+            else parse_datetime('%y%m%d_%H%M%S', s.sv_id)
+        end as pitched_at,
         cast(s.game_pk as int64) as game_id,
         cast(s.game_date as date) as game_date,
         cast(s.game_year as int64) as game_year,
