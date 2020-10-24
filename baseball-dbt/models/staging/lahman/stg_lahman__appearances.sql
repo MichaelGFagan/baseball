@@ -10,7 +10,7 @@ renamed as (
         s.playerid as baseball_reference_id,
         s.lgid as league_id,
         s.teamid as team_id,
-        s.yearid as year_id,
+        cast(s.yearid as int64) as year_id,
         s.g_all as games,
         s.gs as games_started,
         s.g_batting as games_as_batter,

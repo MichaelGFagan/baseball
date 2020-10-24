@@ -43,3 +43,7 @@ select * from {{ ref('base_statcast__2018') }}
 union all
 
 select * from {{ ref('base_statcast__2019') }}
+
+union all
+
+select * from {{ ref('base_statcast__2020') }}

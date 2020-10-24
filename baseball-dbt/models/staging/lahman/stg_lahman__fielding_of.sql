@@ -9,7 +9,7 @@ renamed as (
     select
         s.playerid as baseball_reference_id,
         s.stint,
-        s.yearid as year_id,
+        cast(s.yearid as int64) as year_id,
         s.glf as games_at_left_field,
         s.gcf as games_at_center_field,
         s.grf as games_at_right_field

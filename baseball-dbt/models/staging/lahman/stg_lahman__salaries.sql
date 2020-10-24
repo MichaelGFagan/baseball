@@ -10,7 +10,7 @@ renamed as (
         s.playerid as baseball_reference_id,
         s.teamid as team_id,
         s.lgid as league_id,
-        s.yearid as year_id,
+        cast(s.yearid as int64) as year_id,
         s.salary
 
     from source as s

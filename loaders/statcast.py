@@ -1,8 +1,9 @@
 import argparse
 import datetime
 import pandas as pd
+import pandas_gbq
 from pybaseball import statcast
-from google.cloud import bigquery as bq
+from google.oauth2 import service_account
 
 today = datetime.date.today()
 
@@ -17,11 +18,13 @@ if args.end is None:
 else:
     end_year = args.end
 
-client = bq.Client.from_service_account_json("../bigquery_credentials.json", project="baseball-source")
-
+credentials = service_account.Credentials.from_service_account_file(
+    '../bigquery_credentials.json'
+)
 project_id = "baseball-source"
-dataset_id = "statcast"
-dataset_ref = client.dataset(dataset_id)
+
+years = range(start_year, end_year + 1)
+month_end_dates = {3: 31, 4: 30, 5: 31, 6: 30, 7:31, 8: 31, 9: 30, 10: 31, 11: 30}
 
 def statcast_data(year, end_month_range):
     df_dict = {}
@@ -31,21 +34,19 @@ def statcast_data(year, end_month_range):
             end_date = today.strftime("%Y-%m-%d")
         else:
             end_date = datetime.date(year, i, month_end_dates[i]).strftime("%Y-%m-%d")
-        df = statcast(start_date, end_date)
+        try:
+            df = statcast(start_date, end_date)
+        except:
+            pass
         df_dict[i] = df
     return df_dict
 
 def dataframe_collate(df_dict):
-    for month in list(df_dict.keys()):
-        if month == 3:
-            data = df_dict[month]
-        else:
-            data = pd.concat([data, df_dict[month]])
+    data = pd.DataFrame()
+    for df in list(df_dict.keys()):
+        if len(df_dict[df].index) > 0:
+            data = pd.concat([data, df_dict[df]])
     return data
-
-month_end_dates = {3: 31, 4: 30, 5: 31, 6: 30, 7:31, 8: 31, 9: 30, 10: 31, 11: 30}
-
-years = range(start_year, end_year + 1)
 
 for year in years:
     if year == today.year:
@@ -57,10 +58,8 @@ for year in years:
         end_month_range = today.month + 1
 
     table_name = "statcast_" + str(year)
-    table_id = project_id + "." + dataset_id + "." + table_name
-    table = bq.Table(table_id)
-    df_dict = statcast_data(year, end_month_range)
-    df = dataframe_collate(df_dict)
+    year_df_dict = statcast_data(year, end_month_range)
+    df = dataframe_collate(year_df_dict)
     df.rename(columns={"pitcher.1": "pitcher_1", "fielder_2.1": "fielder_2_1"}, inplace=True)
-    table_ref = dataset_ref.table(table_name)
-    client.load_table_from_dataframe(df, table_ref).result()
+    table_id = "statcast." + table_name
+    pandas_gbq.to_gbq(df, table_id, project_id=project_id, if_exists='replace')

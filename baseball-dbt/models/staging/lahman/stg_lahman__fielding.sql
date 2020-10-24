@@ -2,7 +2,7 @@ with fielding as (
 
     select *
     from {{ ref('base_lahman__fielding') }}
-    where not (year_id >= 1954 and position = 'OF')
+    where not (cast(year_id as int64) >= 1954 and position = 'OF')
 
 ),
 

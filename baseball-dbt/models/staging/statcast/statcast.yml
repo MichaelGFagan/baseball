@@ -17,3 +17,4 @@ sources:
       - name: statcast_2017
       - name: statcast_2018
       - name: statcast_2019
+      - name: statcast_2020
