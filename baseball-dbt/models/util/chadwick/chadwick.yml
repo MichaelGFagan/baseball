@@ -13,7 +13,7 @@ sources:
               - unique
 
 models:
-  - name: stg_chadwick__register
+  - name: util_chadwick__register
     description: This table contains cross-reference ids
     columns:
       - name: person_id

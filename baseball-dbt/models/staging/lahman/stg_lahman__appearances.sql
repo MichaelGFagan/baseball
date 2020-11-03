@@ -4,6 +4,12 @@ with source as (
 
 ),
 
+chadwick as (
+
+    select * from {{ ref('util_chadwick__register') }}
+
+),
+
 renamed as (
 
     select
@@ -14,7 +20,7 @@ renamed as (
         s.g_all as games,
         s.gs as games_started,
         s.g_batting as games_as_batter,
-        s.g_defense as games_as_defense,
+        s.g_defense as games_as_fielder,
         s.g_p as games_as_pitcher,
         s.g_c as games_as_catcher,
         s.g_1b as games_as_first_base,
@@ -31,6 +37,17 @@ renamed as (
 
     from source as s
 
+),
+
+transformed as (
+
+    select
+        c.person_id,
+        r.*
+
+    from renamed as r
+    left join chadwick as c using (baseball_reference_id)
+
 )
 
-select * from renamed
+select * from transformed

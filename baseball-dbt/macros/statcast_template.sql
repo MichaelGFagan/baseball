@@ -1,6 +1,12 @@
 {% macro statcast_template() %}
 
-renamed as (
+chadwick as (
+
+    select * from {{ ref('util_chadwick__register') }}
+
+),
+
+transformed as (
 
     select
         md5(concat(cast(cast(s.game_pk as int64) as string), cast(s.index as string))) as statcast_pitch_id,
@@ -22,16 +28,6 @@ renamed as (
         cast(s.post_away_score as int64) as post_away_score,
         cast(s.bat_score as int64) as batting_team_score,
         cast(s.fld_score as int64) as fielding_team_score,
-        cast(s.batter as int64) as batter_mlbam_id,
-        cast(s.pitcher as int64) as pitcher_mlbam_id,
-        cast(s.fielder_2 as int64) as catcher_mlbam_id,
-        cast(s.fielder_3 as int64) as first_base_mlbam_id,
-        cast(s.fielder_4 as int64) as second_base_mlbam_id,
-        cast(s.fielder_5 as int64) as third_base_mlbam_id,
-        cast(s.fielder_6 as int64) as shortstop_mlbam_id,
-        cast(s.fielder_7 as int64) as left_field_mlbam_id,
-        cast(s.fielder_8 as int64) as center_field_mlbam_id,
-        cast(s.fielder_9 as int64) as right_field_mlbam_id,
         cast(s.stand as string) as batter_stand,
         cast(s.p_throws as string) as pitcher_hand,
         cast(s.inning as int64) as inning,
@@ -43,9 +39,19 @@ renamed as (
         cast(s.outs_when_up as int64) as outs,
         cast(s.if_fielding_alignment as string) as infield_alignment,
         cast(s.of_fielding_alignment as string) as outfield_alignment,
-        cast(s.on_1b as int64) as runner_on_first_mlbam_id,
-        cast(s.on_2b as int64) as runner_on_second_mlbam_id,
-        cast(s.on_3b as int64) as runner_on_third_mlbam_id,
+        c_b.person_id as batter_person_id,
+        c_1.person_id as pitcher_person_id,
+        c_2.person_id as catcher_person_id,
+        c_3.person_id as first_base_person_id,
+        c_4.person_id as second_base_person_id,
+        c_5.person_id as third_base_person_id,
+        c_6.person_id as shortstop_person_id,
+        c_7.person_id as left_field_person_id,
+        c_8.person_id as center_field_person_id,
+        c_9.person_id as right_field_person_id,
+        r_1.person_id as runner_on_first_person_id,
+        r_2.person_id as runner_on_second_person_id,
+        r_3.person_id as runner_on_third_person_id,
         cast(s.pitch_type as string) as pitch_type,
         cast(s.pitch_name as string) as pitch_name,
         cast(s.sz_top as numeric) as strike_zone_top,
@@ -88,9 +94,35 @@ renamed as (
         cast(s.iso_value as int64) as number_of_extra_bases
 
     from source as s
+    left join chadwick as c_b
+        on s.batter = c_b.mlbam_id
+    left join chadwick as c_1
+        on s.pitcher = c_1.mlbam_id
+    left join chadwick as c_2
+        on s.fielder_2 = c_2.mlbam_id
+    left join chadwick as c_3
+        on s.fielder_3 = c_3.mlbam_id
+    left join chadwick as c_4
+        on s.fielder_4 = c_4.mlbam_id
+    left join chadwick as c_5
+        on s.fielder_5 = c_5.mlbam_id
+    left join chadwick as c_6
+        on s.fielder_6 = c_6.mlbam_id
+    left join chadwick as c_7
+        on s.fielder_7 = c_7.mlbam_id
+    left join chadwick as c_8
+        on s.fielder_8 = c_8.mlbam_id
+    left join chadwick as c_9
+        on s.fielder_9 = c_9.mlbam_id
+    left join chadwick as r_1
+        on s.on_1b = r_1.mlbam_id
+    left join chadwick as r_2
+        on s.on_2b = r_2.mlbam_id
+    left join chadwick as r_3
+        on s.on_3b = r_3.mlbam_id
 
 )
 
-select * from renamed
+select * from transformed
 
 {% endmacro %}

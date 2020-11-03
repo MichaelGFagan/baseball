@@ -16,14 +16,37 @@ fielding_post as (
 
     select * from {{ ref('base_lahman__fielding_post') }}
 
+),
+
+chadwick as (
+
+    select * from {{ ref('util_chadwick__register') }}
+
+),
+
+unioned as (
+
+    select * from fielding
+
+    union all
+
+    select * from fielding_of_split
+
+    union all
+
+    select * from fielding_post
+
+),
+
+transformed as (
+
+    select
+        c.person_id,
+        u.*
+
+    from unioned as u
+    left join chadwick as c using (baseball_reference_id)
+
 )
 
-select * from fielding
-
-union all
-
-select * from fielding_of_split
-
-union all
-
-select * from fielding_post
+select * from transformed

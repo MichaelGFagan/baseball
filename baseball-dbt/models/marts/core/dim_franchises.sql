@@ -64,56 +64,62 @@ sums as (
 
     group by 1, 2, 3
 
+),
+
+transformed as (
+
+    select
+        s.franchise_id,
+        s.franchise_name,
+        s.is_active,
+        s.seasons,
+        s.inaugural_year,
+        s.latest_year,
+        s.attendance,
+        case
+            when s.years_with_attendance = 0 then 0
+            else round(s.attendance / s.years_with_attendance)
+        end as average_attendance,
+        s.games,
+        s.wins,
+        s.losses,
+        round(s.wins / s.games, 3) as win_loss_percentage,
+        s.times_wild_card_winner,
+        s.times_division_winner,
+        s.times_league_champion,
+        s.times_world_series_champion,
+        s.runs_scored,
+        s.hits,
+        s.doubles,
+        s.triples,
+        s.home_runs,
+        s.walks,
+        s.strikeouts,
+        s.stolen_bases,
+        s.caught_stealing,
+        case
+            when s.stolen_bases + s.caught_stealing = 0 then 0
+            else s.stolen_bases / (s.stolen_bases + s.caught_stealing)
+        end as stolen_base_percentage,
+        s.hit_by_pitch,
+        s.sacrifice_flies,
+        s.runs_allowed,
+        round(s.runs_allowed / s.outs_pitched * 27, 2) as run_average,
+        s.earned_runs_allowed,
+        round(s.earned_runs_allowed / s.outs_pitched * 27, 2) as earned_run_average,
+        s.complete_games,
+        s.shutouts,
+        s.saves,
+        s.outs_pitched,
+        s.hits_allowed,
+        s.home_runs_allowed,
+        s.walks_allowed,
+        s.strikeouts_pitched,
+        s.errors,
+        s.double_plays
+
+    from sums as s
+
 )
 
-select
-    s.franchise_id,
-    s.franchise_name,
-    s.is_active,
-    s.seasons,
-    s.inaugural_year,
-    s.latest_year,
-    s.attendance,
-    case
-        when s.years_with_attendance = 0 then 0
-        else round(s.attendance / s.years_with_attendance)
-    end as average_attendance,
-    s.games,
-    s.wins,
-    s.losses,
-    round(s.wins / s.games, 3) as win_loss_percentage,
-    s.times_wild_card_winner,
-    s.times_division_winner,
-    s.times_league_champion,
-    s.times_world_series_champion,
-    s.runs_scored,
-    s.hits,
-    s.doubles,
-    s.triples,
-    s.home_runs,
-    s.walks,
-    s.strikeouts,
-    s.stolen_bases,
-    s.caught_stealing,
-    case
-        when s.stolen_bases + s.caught_stealing = 0 then 0
-        else s.stolen_bases / (s.stolen_bases + s.caught_stealing)
-    end as stolen_base_percentage,
-    s.hit_by_pitch,
-    s.sacrifice_flies,
-    s.runs_allowed,
-    round(s.runs_allowed / s.outs_pitched * 27, 2) as run_average,
-    s.earned_runs_allowed,
-    round(s.earned_runs_allowed / s.outs_pitched * 27, 2) as earned_run_average,
-    s.complete_games,
-    s.shutouts,
-    s.saves,
-    s.outs_pitched,
-    s.hits_allowed,
-    s.home_runs_allowed,
-    s.walks_allowed,
-    s.strikeouts_pitched,
-    s.errors,
-    s.double_plays
-
-from sums as s
+select * from transformed

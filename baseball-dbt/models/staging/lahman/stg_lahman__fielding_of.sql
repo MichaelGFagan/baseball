@@ -4,6 +4,12 @@ with source as (
 
 ),
 
+chadwick as (
+
+    select * from {{ ref('util_chadwick__register') }}
+
+),
+
 renamed as (
 
     select
@@ -61,14 +67,31 @@ right_field as (
 
     where games_at_right_field is not null and games_at_right_field > 0
 
+),
+
+unioned as (
+
+    select * from left_field
+
+    union all
+
+    select * from center_field
+
+    union all
+
+    select * from right_field
+
+),
+
+transformed as (
+
+    select
+        c.person_id,
+        u.*
+
+    from unioned as u
+    left join chadwick as c using (baseball_reference_id)
+
 )
 
-select * from left_field
-
-union all
-
-select * from center_field
-
-union all
-
-select * from right_field
+select * from transformed

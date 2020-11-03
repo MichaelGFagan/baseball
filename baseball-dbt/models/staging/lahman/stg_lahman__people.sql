@@ -4,6 +4,12 @@ with source as (
 
 ),
 
+chadwick as (
+
+    select * from {{ ref('util_chadwick__register') }}
+
+),
+
 renamed as (
 
     select
@@ -34,6 +40,17 @@ renamed as (
 
     from source as s
 
+),
+
+transformed as (
+
+    select
+        c.person_id,
+        r.*
+
+    from renamed as r
+    left join chadwick as c using (baseball_reference_id)
+
 )
 
-select * from renamed
+select * from transformed

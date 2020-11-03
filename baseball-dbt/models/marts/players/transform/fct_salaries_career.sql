@@ -8,12 +8,11 @@ transformed as (
 
     select
         s.person_id,
-        s.year_id,
-        s.team_id,
-        s.league_id,
-        s.salary
+        sum(s.salary) as salary
 
     from salaries as s
+
+    group by 1
 
 )
 
