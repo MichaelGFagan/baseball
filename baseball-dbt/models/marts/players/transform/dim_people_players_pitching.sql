@@ -1,6 +1,12 @@
 with pitching as (
 
-    select * from {{ ref('stg_lahman__pitching') }}
+    select * from {{ ref('stg_lahman__pitching') }} where is_postseason = FALSE
+
+),
+
+teams as (
+
+    select * from {{ ref('stg_lahman__teams') }}
 
 ),
 
@@ -8,36 +14,36 @@ sums as (
 
     select
         p.person_id,
-        p.year_id,
-        p.is_postseason,
-        count(distinct p.team_id) as teams,
-        sum(ifnull(p.wins, 0)) as wins,
-        sum(ifnull(p.losses, 0)) as losses,
-        sum(ifnull(p.games, 0)) as games,
-        sum(ifnull(p.games_started, 0)) as games_started,
-        sum(ifnull(p.games_finished, 0)) as games_finished,
-        sum(ifnull(p.complete_games, 0)) as complete_games,
-        sum(ifnull(p.shutouts, 0)) as shutouts,
-        sum(ifnull(p.saves, 0)) as saves,
-        sum(ifnull(p.batters_faced, 0)) as batters_faced,
-        sum(ifnull(p.outs_pitched, 0)) as outs_pitched,
-        sum(ifnull(p.hits, 0)) as hits,
-        sum(ifnull(p.runs, 0)) as runs,
-        sum(ifnull(p.earned_runs, 0)) as earned_runs,
-        sum(ifnull(p.home_runs, 0)) as home_runs,
-        sum(ifnull(p.walks, 0)) as walks,
-        sum(ifnull(p.strikeouts, 0)) as strikeouts,
-        sum(ifnull(p.intentional_walks, 0)) as intentional_walks,
-        sum(ifnull(p.hit_by_pitches, 0)) as hit_by_pitches,
-        sum(ifnull(p.wild_pitches, 0)) as wild_pitches,
-        sum(ifnull(p.balks, 0)) as balks,
-        sum(ifnull(p.sacrifice_hits, 0)) as sacrifice_hits,
-        sum(ifnull(p.sacrifice_flies, 0)) as sacrifice_flies,
-        sum(ifnull(p.ground_into_double_plays, 0)) as ground_into_double_plays
+        {# count(distinct p.year_id) as seasons,
+        count(distinct t.franchise_id) as franchises, #}
+        {{ all_null_or_sum('p.wins') }} as wins,
+        {{ all_null_or_sum('p.losses') }} as losses,
+        {{ all_null_or_sum('p.games') }} as games_pitched,
+        {{ all_null_or_sum('p.games_started') }} as games_started,
+        {{ all_null_or_sum('p.games_finished') }} as games_finished,
+        {{ all_null_or_sum('p.complete_games') }} as complete_games,
+        {{ all_null_or_sum('p.shutouts') }} as shutouts,
+        {{ all_null_or_sum('p.saves') }} as saves,
+        {{ all_null_or_sum('p.batters_faced') }} as batters_faced,
+        {{ all_null_or_sum('p.outs_pitched') }} as outs_pitched,
+        {{ all_null_or_sum('p.hits') }} as hits,
+        {{ all_null_or_sum('p.runs') }} as runs,
+        {{ all_null_or_sum('p.earned_runs') }} as earned_runs,
+        {{ all_null_or_sum('p.home_runs') }} as home_runs,
+        {{ all_null_or_sum('p.walks') }} as walks,
+        {{ all_null_or_sum('p.strikeouts') }} as strikeouts,
+        {{ all_null_or_sum('p.intentional_walks') }} as intentional_walks,
+        {{ all_null_or_sum('p.hit_by_pitches') }} as hit_by_pitches,
+        {{ all_null_or_sum('p.wild_pitches') }} as wild_pitches,
+        {{ all_null_or_sum('p.balks') }} as balks,
+        {{ all_null_or_sum('p.sacrifice_hits') }} as sacrifice_hits,
+        {{ all_null_or_sum('p.sacrifice_flies') }} as sacrifice_flies,
+        {{ all_null_or_sum('p.ground_into_double_plays') }} as ground_into_double_plays
 
     from pitching as p
+    inner join teams as t using (year_id, team_id)
 
-    group by 1, 2, 3
+    group by 1
 
 ),
 
@@ -45,14 +51,13 @@ transformed as (
 
     select
         s.person_id,
-        s.year_id,
-        s.is_postseason,
-        s.teams,
+        {# s.seasons,
+        s.franchises, #}
         s.wins,
         s.losses,
-        s.games,
-        s.games_started,
-        s.games_finished,
+        {# s.games_pitched, #}
+        s.games_started as games_as_starting_pitcher,
+        s.games_finished as games_as_finishing_pitcher,
         s.complete_games,
         s.shutouts,
         s.saves,
@@ -66,7 +71,7 @@ transformed as (
         s.walks as walks_allowed,
         s.strikeouts as strikeouts_thrown,
         s.intentional_walks as intentional_walks_allowed,
-        s.hit_by_pitches as hit_by_pitches_allowed,
+        s.hit_by_pitches as hit_by_pitches_thrown,
         s.wild_pitches,
         s.balks,
         s.sacrifice_hits as sacrifice_hits_allowed,

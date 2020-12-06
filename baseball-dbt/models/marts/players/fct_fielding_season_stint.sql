@@ -21,6 +21,7 @@ transformed as (
         f.league_id,
         f.is_postseason,
         f.position,
+        f.position_number,
         f.games,
         f.games_started,
         f.outs_at_position,
@@ -37,7 +38,7 @@ transformed as (
         f.zone_rating
 
     from fielding as f
-    join teams as t using (year_id, team_id)
+    inner join teams as t using (year_id, team_id)
 
 )
 

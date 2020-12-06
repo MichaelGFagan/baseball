@@ -13,27 +13,29 @@ chadwick as (
 renamed as (
 
     select
-        s.playerid as baseball_reference_id,
+        s.playerid as lahman_id,
+        s.retroid as retrosheet_id,
+        s.bbrefid as baseball_reference_id,
         s.namefirst as first_name,
         s.namelast as last_name,
         s.namegiven as given_name,
-        s.weight,
-        s.height,
+        cast(s.weight as int64) as weight,
+        cast(s.height as int64) as height,
         s.bats,
         s.throws,
         s.debut as debut_game_date,
         s.finalgame as final_game_date,
         date(cast(s.birthyear as int64), cast(s.birthmonth as int64), cast(s.birthday as int64)) as date_of_birth,
-        s.birthyear as birth_year,
-        s.birthmonth as birth_month,
-        s.birthday as birth_day,
+        cast(s.birthyear as int64) as birth_year,
+        cast(s.birthmonth as int64) as birth_month,
+        cast(s.birthday as int64) as birth_day,
         s.birthcountry as birth_country,
         s.birthstate as birth_state,
         s.birthcity as birth_city,
         date(cast(s.deathyear as int64), cast(s.deathmonth as int64), cast(s.deathday as int64)) as date_of_death,
-        s.deathyear as death_year,
-        s.deathmonth as death_month,
-        s.deathday as death_day,
+        cast(s.deathyear as int64) as death_year,
+        cast(s.deathmonth as int64) as death_month,
+        cast(s.deathday as int64) as death_day,
         s.deathcountry as death_country,
         s.deathstate as death_state,
         s.deathcity as death_city
@@ -49,7 +51,7 @@ transformed as (
         r.*
 
     from renamed as r
-    left join chadwick as c using (baseball_reference_id)
+    left join chadwick as c using (lahman_id)
 
 )
 

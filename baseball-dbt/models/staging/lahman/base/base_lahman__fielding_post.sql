@@ -7,13 +7,24 @@ with source as (
 renamed as (
 
     select
-        s.playerid as baseball_reference_id,
+        s.playerid as lahman_id,
         cast(s.round as string) as stint,
         s.teamid as team_id,
         s.lgid as league_id,
         cast(s.yearid as int64) as year_id,
         TRUE as is_postseason,
         s.pos as position,
+        case
+            when s.pos = 'P' then 1
+            when s.pos = 'C' then 2
+            when s.pos = '1B' then 3
+            when s.pos = '2B' then 4
+            when s.pos = '3B' then 5
+            when s.pos = 'SS' then 6
+            when s.pos = 'LF' then 7
+            when s.pos = 'CF' then 8
+            when s.pos = 'RF' then 9
+        end as position_number,
         cast(s.g as int64) as games,
         cast(s.gs as int64) as games_started,
         cast(s.innouts as int64) as outs_at_position,

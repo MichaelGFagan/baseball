@@ -14,6 +14,7 @@ transformed as (
 
     select
         r.person_id,
+        r.lahman_id,
         r.mlbam_id,
         r.retrosheet_id,
         r.baseball_reference_id,

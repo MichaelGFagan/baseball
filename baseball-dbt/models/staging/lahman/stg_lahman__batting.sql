@@ -33,7 +33,7 @@ transformed as (
         u.*
 
     from unioned as u
-    left join chadwick as c using (baseball_reference_id)
+    left join chadwick as c using (lahman_id)
 
 )
 

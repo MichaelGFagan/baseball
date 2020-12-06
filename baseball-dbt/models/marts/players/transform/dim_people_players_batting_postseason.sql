@@ -14,32 +14,32 @@ sums as (
 
     select
         b.person_id,
-        {{ all_null_or_sum('b.games') }} as postseason_games_batted,
-        {{ all_null_or_sum('b.plate_appearances') }} as postseason_plate_appearances,
-        {{ all_null_or_sum('b.at_bats') }} as postseason_at_bats,
-        {{ all_null_or_sum('b.runs') }} as postseason_runs,
-        {{ all_null_or_sum('b.hits') }} as postseason_hits,
-        {{ all_null_or_sum('b.doubles') }} as postseason_doubles,
-        {{ all_null_or_sum('b.triples') }} as postseason_triples,
-        {{ all_null_or_sum('b.home_runs') }} as postseason_home_runs,
-        {{ all_null_or_sum('b.times_on_base') }} as tpostseason_imes_on_base,
-        {{ all_null_or_sum('b.outs_made') }} as postseason_outs_made,
-        {{ all_null_or_sum('b.extra_base_hits') }} as postseason_extra_base_hits,
-        {{ all_null_or_sum('b.total_bases') }} as postseason_total_bases,
-        {{ all_null_or_sum('b.runs_batted_in') }} as postseason_runs_batted_in,
-        {{ all_null_or_sum('b.stolen_bases') }} as postseason_stolen_bases,
-        {{ all_null_or_sum('b.caught_stealing') }} as postseason_caught_stealing,
-        {{ all_null_or_sum('b.walks') }} as postseason_walks,
-        {{ all_null_or_sum('b.strikeouts') }} as postseason_strikeouts,
-        {{ all_null_or_sum('b.intentional_walks') }} as postseason_intentional_walks,
-        {{ all_null_or_sum('b.hit_by_pitch') }} as postseason_hit_by_pitch,
-        {{ all_null_or_sum('b.sacrifice_hits') }} as postseason_sacrifice_hits,
-        {{ all_null_or_sum('b.sacrifice_flies') }} as postseason_sacrifice_flies,
-        {{ all_null_or_sum('b.ground_into_double_plays') }} as postseason_ground_into_double_plays,
-        {{ all_null_or_sum('b.on_base_denominator') }} as postseason_on_base_denominator
+        {{ all_null_or_sum('b.games') }} as games,
+        {{ all_null_or_sum('b.plate_appearances') }} as plate_appearances,
+        {{ all_null_or_sum('b.at_bats') }} as at_bats,
+        {{ all_null_or_sum('b.runs') }} as runs,
+        {{ all_null_or_sum('b.hits') }} as hits,
+        {{ all_null_or_sum('b.doubles') }} as doubles,
+        {{ all_null_or_sum('b.triples') }} as triples,
+        {{ all_null_or_sum('b.home_runs') }} as home_runs,
+        {{ all_null_or_sum('b.times_on_base') }} as times_on_base,
+        {{ all_null_or_sum('b.outs_made') }} as outs_made,
+        {{ all_null_or_sum('b.extra_base_hits') }} as extra_base_hits,
+        {{ all_null_or_sum('b.total_bases') }} as total_bases,
+        {{ all_null_or_sum('b.runs_batted_in') }} as runs_batted_in,
+        {{ all_null_or_sum('b.stolen_bases') }} as stolen_bases,
+        {{ all_null_or_sum('b.caught_stealing') }} as caught_stealing,
+        {{ all_null_or_sum('b.walks') }} as walks,
+        {{ all_null_or_sum('b.strikeouts') }} as strikeouts,
+        {{ all_null_or_sum('b.intentional_walks') }} as intentional_walks,
+        {{ all_null_or_sum('b.hit_by_pitches') }} as hit_by_pitches,
+        {{ all_null_or_sum('b.sacrifice_hits') }} as sacrifice_hits,
+        {{ all_null_or_sum('b.sacrifice_flies') }} as sacrifice_flies,
+        {{ all_null_or_sum('b.ground_into_double_plays') }} as ground_into_double_plays,
+        {{ all_null_or_sum('b.on_base_denominator') }} as on_base_denominator
 
     from batting as b
-    join teams as t using (year_id, team_id)
+    inner join teams as t using (year_id, team_id)
 
     group by 1
 
@@ -49,9 +49,9 @@ transformed as (
 
     select
         s.person_id,
-        s.seasons as postseason_appearances,
-        s.franchises as postseason_franchises,
-        s.games as postseason_games,
+        {# s.seasons as postseason_appearances,
+        s.franchises as postseason_franchises, #}
+        s.games as postseason_games_batted,
         s.plate_appearances as postseason_plate_appearances,
         s.at_bats as postseason_at_bats,
         s.runs as postseason_runs,
@@ -73,7 +73,7 @@ transformed as (
         {{ no_divide_by_zero('s.total_bases', 's.at_bats', 3) }} as postseason_slugging_percentage,
         {{ no_divide_by_zero('s.times_on_base', 's.on_base_denominator', 3) }} + {{ no_divide_by_zero('s.total_bases', 's.at_bats', 3) }} as postseason_on_base_plus_slugging,
         s.intentional_walks as postseason_intentional_walks,
-        s.hit_by_pitch as postseason_hit_by_pitch,
+        s.hit_by_pitches as postseason_hit_by_pitches,
         s.sacrifice_hits as postseason_sacrifice_hits,
         s.sacrifice_flies as postseason_sacrifice_flies,
         s.ground_into_double_plays as postseason_ground_into_double_plays,

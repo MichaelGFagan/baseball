@@ -17,6 +17,7 @@ transformed as (
         f.year_id,
         f.is_postseason,
         f.position,
+        f.position_number,
         count(distinct f.team_id) as teams,
         sum(f.games) as games,
         sum(f.games_started) as games_started,
@@ -33,9 +34,9 @@ transformed as (
         sum(f.caught_stealing) as caught_stealing
 
     from fielding as f
-    join teams as t using (year_id, team_id)
+    inner join teams as t using (year_id, team_id)
 
-    group by 1, 2, 3, 4
+    group by 1, 2, 3, 4, 5
 
 )
 

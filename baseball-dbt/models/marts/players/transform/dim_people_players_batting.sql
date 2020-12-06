@@ -32,14 +32,14 @@ sums as (
         {{ all_null_or_sum('b.walks') }} as walks,
         {{ all_null_or_sum('b.strikeouts') }} as strikeouts,
         {{ all_null_or_sum('b.intentional_walks') }} as intentional_walks,
-        {{ all_null_or_sum('b.hit_by_pitch') }} as hit_by_pitch,
+        {{ all_null_or_sum('b.hit_by_pitches') }} as hit_by_pitches,
         {{ all_null_or_sum('b.sacrifice_hits') }} as sacrifice_hits,
         {{ all_null_or_sum('b.sacrifice_flies') }} as sacrifice_flies,
         {{ all_null_or_sum('b.ground_into_double_plays') }} as ground_into_double_plays,
         {{ all_null_or_sum('b.on_base_denominator') }} as on_base_denominator
 
     from batting as b
-    join teams as t using (year_id, team_id)
+    inner join teams as t using (year_id, team_id)
 
     group by 1
 
@@ -49,9 +49,9 @@ transformed as (
 
     select
         s.person_id,
-        s.seasons,
+        {# s.seasons,
         s.franchises,
-        s.games_as_batter,
+        s.games_as_batter, #}
         s.plate_appearances,
         s.at_bats,
         s.runs,
@@ -73,7 +73,7 @@ transformed as (
         {{ no_divide_by_zero('s.total_bases', 's.at_bats', 3) }} as slugging_percentage,
         {{ no_divide_by_zero('s.times_on_base', 's.on_base_denominator', 3) }} + {{ no_divide_by_zero('s.total_bases', 's.at_bats', 3) }} as on_base_plus_slugging,
         s.intentional_walks,
-        s.hit_by_pitch,
+        s.hit_by_pitches,
         s.sacrifice_hits,
         s.sacrifice_flies,
         s.ground_into_double_plays,

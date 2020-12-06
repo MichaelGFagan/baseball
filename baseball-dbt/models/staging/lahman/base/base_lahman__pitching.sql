@@ -7,7 +7,7 @@ with source as (
 renamed as (
 
     select
-        s.playerid as baseball_reference_id,
+        s.playerid as lahman_id,
         cast(s.stint as string) as stint,
         s.teamid as team_id,
         s.lgid as league_id,
@@ -30,7 +30,7 @@ renamed as (
         cast(s.so as int64) as strikeouts,
         cast(s.ibb as int64) as intentional_walks,
         cast(s.wp as int64) as wild_pitches,
-        cast(s.hbp as int64) as hit_by_pitch,
+        cast(s.hbp as int64) as hit_by_pitches,
         cast(s.bk as int64) as balks,
         cast(s.bfp as int64) as batters_faced,
         cast(s.sh as int64) as sacrifice_hits,

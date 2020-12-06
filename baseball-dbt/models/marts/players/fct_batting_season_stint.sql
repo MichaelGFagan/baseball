@@ -41,7 +41,7 @@ transformed as (
         {{ no_divide_by_zero('b.total_bases', 'b.at_bats', 3) }} as slugging_percentage,
         {{ no_divide_by_zero('b.times_on_base', 'b.on_base_denominator', 3) }} + {{ no_divide_by_zero('b.total_bases', 'b.at_bats', 3) }} as on_base_plus_slugging,
         b.intentional_walks,
-        b.hit_by_pitch,
+        b.hit_by_pitches,
         b.sacrifice_hits,
         b.sacrifice_flies,
         b.ground_into_double_plays,

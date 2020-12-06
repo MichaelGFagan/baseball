@@ -13,7 +13,7 @@ teams as (
 sums as (
 
     select
-        m.baseball_reference_id,
+        m.lahman_id,
         count(distinct m.year_id) as seasons,
         min(m.year_id) as debut_year,
         max(m.year_id) as final_year,

@@ -13,7 +13,7 @@ chadwick as (
 renamed as (
 
     select
-        s.playerid as baseball_reference_id,
+        s.playerid as lahman_id,
         s.stint,
         cast(s.yearid as int64) as year_id,
         s.glf as games_at_left_field,
@@ -27,10 +27,11 @@ renamed as (
 left_field as (
 
     select
-        r.baseball_reference_id,
+        r.lahman_id,
         r.stint,
         r.year_id,
         'LF' as position,
+        7 as position_number,
         r.games_at_left_field as games
 
     from renamed as r
@@ -42,10 +43,11 @@ left_field as (
 center_field as (
 
     select
-        r.baseball_reference_id,
+        r.lahman_id,
         r.stint,
         r.year_id,
         'CF' as position,
+        8 as position_number,
         r.games_at_center_field as games
 
     from renamed as r
@@ -57,10 +59,11 @@ center_field as (
 right_field as (
 
     select
-        r.baseball_reference_id,
+        r.lahman_id,
         r.stint,
         r.year_id,
         'RF' as position,
+        9 as position_number,
         r.games_at_right_field as games
 
     from renamed as r
@@ -90,7 +93,7 @@ transformed as (
         u.*
 
     from unioned as u
-    left join chadwick as c using (baseball_reference_id)
+    left join chadwick as c using (lahman_id)
 
 )
 

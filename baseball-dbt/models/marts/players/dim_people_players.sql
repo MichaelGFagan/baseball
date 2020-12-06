@@ -10,6 +10,54 @@ register as (
 
 ),
 
+appearances as (
+
+    select * from {{ ref('dim_people_players_appearances') }}
+
+),
+
+batting as (
+
+    select * from {{ ref('dim_people_players_batting') }}
+
+),
+
+pitching as (
+
+    select * from {{ ref('dim_people_players_pitching') }}
+
+),
+
+fielding as (
+
+    select * from {{ ref('dim_people_players_fielding') }}
+
+),
+
+postseason_batting as (
+
+    select * from {{ ref('dim_people_players_batting_postseason') }}
+
+),
+
+postseason_pitching as (
+
+    select * from {{ ref('dim_people_players_pitching_postseason') }}
+
+),
+
+postseason_fielding as (
+
+    select * from {{ ref('dim_people_players_fielding_postseason') }}
+
+),
+
+salaries as (
+
+    select * from {{ ref('dim_people_players_salaries') }}
+
+),
+
 transformed as (
 
     select
@@ -39,6 +87,23 @@ transformed as (
     from register as r
     left join people as p using (person_id)
 
+),
+
+final as (
+
+    select
+        *
+
+    from transformed
+    inner join appearances using (person_id)
+    left join batting using (person_id)
+    left join pitching using (person_id)
+    left join fielding using (person_id)
+    left join postseason_batting using (person_id)
+    left join postseason_pitching using (person_id)
+    left join postseason_fielding using (person_id)
+    left join salaries using (person_id)
+
 )
 
-select * from transformed
+select * from final

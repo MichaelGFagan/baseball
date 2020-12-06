@@ -5,7 +5,7 @@ with managers as (
 )
 
 select
-    m.baseball_reference_id,
+    m.lahman_id,
     m.year_id,
     m.team_id,
     m.league_id,

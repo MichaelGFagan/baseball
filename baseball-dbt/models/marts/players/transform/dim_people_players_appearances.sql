@@ -16,7 +16,7 @@ transformed as (
         a.person_id,
         count(distinct a.year_id) as seasons,
         count(distinct a.team_id) as teams,
-        array_agg(distinct a.team_id order by a.team_id) as team_list,
+        array_agg(distinct a.team_id ignore nulls order by a.team_id) as team_list,
         count(distinct t.franchise_id) as franchises,
         array_agg(distinct t.franchise_id order by t.franchise_id) as franchise_list,
         sum(ifnull(a.games, 0)) as games,

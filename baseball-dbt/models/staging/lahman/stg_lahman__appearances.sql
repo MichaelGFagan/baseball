@@ -13,7 +13,7 @@ chadwick as (
 renamed as (
 
     select
-        s.playerid as baseball_reference_id,
+        s.playerid as lahman_id,
         s.lgid as league_id,
         s.teamid as team_id,
         cast(s.yearid as int64) as year_id,
@@ -46,7 +46,7 @@ transformed as (
         r.*
 
     from renamed as r
-    left join chadwick as c using (baseball_reference_id)
+    left join chadwick as c using (lahman_id)
 
 )
 
