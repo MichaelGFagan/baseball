@@ -12,7 +12,7 @@ renamed as (
         s.teamid as team_id,
         s.lgid as league_id,
         cast(s.yearid as int64) as year_id,
-        TRUE as is_postseason,
+        FALSE as is_postseason,
         cast(s.w as int64) as wins,
         cast(s.l as int64) as losses,
         cast(s.g as int64) as games,

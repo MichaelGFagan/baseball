@@ -33,5 +33,7 @@ clean-targets:         # directories to be removed by `dbt clean`
 models:
   baseball_dbt:
     materialized: view
+    marts:
+      materialized: table
     staging:
       schema: staging

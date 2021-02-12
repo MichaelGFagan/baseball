@@ -30,11 +30,23 @@ transformed as (
         s.name_given as given_name,
         s.name_suffix as suffix,
         s.name_matrilineal as matrilineal_name,
-        if(s.birth_year is not null and s.birth_month is not null and s.birth_day is not null, date(cast(s.birth_year as int64), cast(s.birth_month as int64), cast(s.birth_day as int64)), null) as birth_date,
-        if(s.death_year is not null and s.death_month is not null and s.death_day is not null, date(cast(s.death_year as int64), cast(s.death_month as int64), cast(s.death_day as int64)), null) as death_date,
+        case
+            when s.birth_year is null or s.birth_month is null or s.birth_day is null then null
+            when s.birth_year > 2020 or s.birth_year < 1800 then null
+            when s.birth_month > 12 or s.birth_month < 1 then null
+            when s.birth_day > 31 or s.birth_day < 1 then null
+            else date(cast(s.birth_year as int64), cast(s.birth_month as int64), cast(s.birth_day as int64))
+        end as birth_date,
         cast(s.birth_year as int64) as birth_year,
         cast(s.birth_month as int64) as birth_month,
         cast(s.birth_day as int64) as birth_day,
+        case
+            when s.death_year is null or s.death_month is null or s.death_day is null then null
+            when s.death_year > 2020 or s.death_year < 1800 then null
+            when s.death_month > 12 or s.death_month < 1 then null
+            when s.death_day > 31 or s.death_day < 1 then null
+            else date(cast(s.death_year as int64), cast(s.death_month as int64), cast(s.death_day as int64))
+        end as death_date,
         cast(s.death_year as int64) as death_year,
         cast(s.death_month as int64) as death_month,
         cast(s.death_day as int64) as death_day,
