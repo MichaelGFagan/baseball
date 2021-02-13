@@ -12,49 +12,49 @@ register as (
 
 appearances as (
 
-    select * from {{ ref('dim_people_players_appearances') }}
+    select * from {{ ref('players_appearances') }}
 
 ),
 
 batting as (
 
-    select * from {{ ref('dim_people_players_batting') }}
+    select * from {{ ref('players_batting') }}
 
 ),
 
 pitching as (
 
-    select * from {{ ref('dim_people_players_pitching') }}
+    select * from {{ ref('players_pitching') }}
 
 ),
 
 fielding as (
 
-    select * from {{ ref('dim_people_players_fielding') }}
+    select * from {{ ref('players_fielding') }}
 
 ),
 
 postseason_batting as (
 
-    select * from {{ ref('dim_people_players_batting_postseason') }}
+    select * from {{ ref('players_batting_postseason') }}
 
 ),
 
 postseason_pitching as (
 
-    select * from {{ ref('dim_people_players_pitching_postseason') }}
+    select * from {{ ref('players_pitching_postseason') }}
 
 ),
 
 postseason_fielding as (
 
-    select * from {{ ref('dim_people_players_fielding_postseason') }}
+    select * from {{ ref('players_fielding_postseason') }}
 
 ),
 
 salaries as (
 
-    select * from {{ ref('dim_people_players_salaries') }}
+    select * from {{ ref('players_salaries') }}
 
 ),
 
