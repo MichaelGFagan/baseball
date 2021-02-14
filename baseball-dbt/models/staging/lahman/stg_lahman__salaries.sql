@@ -10,28 +10,29 @@ chadwick as (
 
 ),
 
-renamed as (
+transformed as (
 
     select
-        s.playerid as lahman_id,
-        s.teamid as team_id,
-        s.lgid as league_id,
-        cast(s.yearid as int64) as year_id,
-        s.salary
+        s.playerid as lahman_id
+      , s.teamid as team_id
+      , s.lgid as league_id
+      , cast(s.yearid as int64) as year_id
+      , s.salary
 
     from source as s
 
 ),
 
-transformed as (
+final as (
 
     select
-        c.person_id,
-        r.*
+        chadwick.person_id
+      , transformed.*
 
-    from renamed as r
-    left join chadwick as c using (lahman_id)
+    from transformed
+    left join chadwick
+        on transformed.lahman_id = chadwick.lahman_id
 
 )
 
-select * from transformed
+select * from final

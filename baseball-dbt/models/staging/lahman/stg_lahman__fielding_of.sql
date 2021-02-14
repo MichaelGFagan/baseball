@@ -10,65 +10,65 @@ chadwick as (
 
 ),
 
-renamed as (
+transformed as (
 
     select
-        s.playerid as lahman_id,
-        s.stint,
-        cast(s.yearid as int64) as year_id,
-        s.glf as games_at_left_field,
-        s.gcf as games_at_center_field,
-        s.grf as games_at_right_field
+        source.playerid as lahman_id
+      , source.stint
+      , cast(source.yearid as int64) as year_id
+      , source.glf as games_at_left_field
+      , source.gcf as games_at_center_field
+      , source.grf as games_at_right_field
 
-    from source as s
+    from source
 
 ),
 
 left_field as (
 
     select
-        r.lahman_id,
-        r.stint,
-        r.year_id,
-        'LF' as position,
-        7 as position_number,
-        r.games_at_left_field as games
+        renamed.lahman_id
+      , renamed.stint
+      , renamed.year_id
+      , 'LF' as position
+      , 7 as position_number
+      , renamed.games_at_left_field as games
 
-    from renamed as r
+    from renamed
 
-    where games_at_left_field is not null and games_at_left_field > 0
+    where renamed.games_at_left_field is not null and renamed.games_at_left_field > 0
 
 ),
 
 center_field as (
 
     select
-        r.lahman_id,
-        r.stint,
-        r.year_id,
-        'CF' as position,
-        8 as position_number,
-        r.games_at_center_field as games
+        renamed.lahman_id
+      , renamed.stint
+      , renamed.year_id
+      , 'CF' as position
+      , 8 as position_number
+      , renamed.games_at_center_field as games
 
-    from renamed as r
+    from renamed
 
-    where games_at_center_field is not null and games_at_center_field > 0
+    where renamed.games_at_center_field is not null and renamed.games_at_center_field > 0
 
 ),
 
 right_field as (
 
     select
-        r.lahman_id,
-        r.stint,
-        r.year_id,
-        'RF' as position,
-        9 as position_number,
-        r.games_at_right_field as games
+        renamed.lahman_id
+      , renamed.stint
+      , renamed.year_id
+      , 'RF' as position
+      , 9 as position_number
+      , renamed.games_at_right_field as games
 
-    from renamed as r
+    from renamed
 
-    where games_at_right_field is not null and games_at_right_field > 0
+    where renamed.games_at_right_field is not null and renamed.games_at_right_field > 0
 
 ),
 
@@ -86,15 +86,16 @@ unioned as (
 
 ),
 
-transformed as (
+final as (
 
     select
-        c.person_id,
-        u.*
+        chadwick.person_id
+      , unioned.*
 
-    from unioned as u
-    left join chadwick as c using (lahman_id)
+    from unioned
+    left join chadwick
+        on unioned.lahman_id = chadwick.lahman_id
 
 )
 
-select * from transformed
+select * from final

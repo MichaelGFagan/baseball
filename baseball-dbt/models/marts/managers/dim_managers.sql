@@ -13,17 +13,19 @@ teams as (
 sums as (
 
     select
-        m.lahman_id,
-        count(distinct m.year_id) as seasons,
-        min(m.year_id) as debut_year,
-        max(m.year_id) as final_year,
-        count(distinct t.franchise_id) count_franchises_managed,
-        sum(m.games) as games,
-        sum(m.wins) as wins,
-        sum(m.losses) as losses
+        managers.lahman_id
+      , count(distinct managers.year_id) as seasons
+      , min(managers.year_id) as debut_year
+      , max(managers.year_id) as final_year
+      , count(distinct teams.franchise_id) count_franchises_managed
+      , sum(managers.games) as games
+      , sum(managers.wins) as wins
+      , sum(managers.losses) as losses
 
-    from managers as m
-    join teams as t using (team_id, year_id)
+    from managers
+    join teams
+        on managers.team_id = teams.team_id
+        and managers.year_id = teams.year_id
 
     group by 1
 

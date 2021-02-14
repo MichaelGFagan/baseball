@@ -61,48 +61,65 @@ salaries as (
 transformed as (
 
     select
-        r.person_id,
-        p.baseball_reference_id,
-        p.bats,
-        p.throws,
-        p.debut_game_date,
-        p.final_game_date,
-        r.first_pro_game_played,
-        r.last_pro_game_played,
-        r.first_mlb_game_played,
-        r.last_mlb_game_played,
-        r.first_college_game_played,
-        r.last_college_game_played,
-        r.first_pro_game_managed,
-        r.last_pro_game_managed,
-        r.first_mlb_game_managed,
-        r.last_mlb_game_managed,
-        r.first_college_game_managed,
-        r.last_college_game_managed,
-        r.first_pro_game_umpired,
-        r.last_pro_game_umpired,
-        r.first_mlb_game_umpired,
-        r.last_mlb_game_umpired
+        register.person_id
+      , people.baseball_reference_id
+      , people.bats
+      , people.throws
+      , people.debut_game_date
+      , people.final_game_date
+      , register.first_pro_game_played
+      , register.last_pro_game_played
+      , register.first_mlb_game_played
+      , register.last_mlb_game_played
+      , register.first_college_game_played
+      , register.last_college_game_played
+      , register.first_pro_game_managed
+      , register.last_pro_game_managed
+      , register.first_mlb_game_managed
+      , register.last_mlb_game_managed
+      , register.first_college_game_managed
+      , register.last_college_game_managed
+      , register.first_pro_game_umpired
+      , register.last_pro_game_umpired
+      , register.first_mlb_game_umpired
+      , register.last_mlb_game_umpired
 
-    from register as r
-    left join people as p using (person_id)
+    from register
+    left join people
+        register.person_id = people.person_id
 
 ),
 
 final as (
 
     select
-        *
+        transformed.*
+      , {{ dbt_utils.star(from = ref('players_appearances'), except = ['person_id']) }}
+      , {{ dbt_utils.star(from = ref('players_batting'), except = ['person_id']) }}
+      , {{ dbt_utils.star(from = ref('players_pitching'), except = ['person_id']) }}
+      , {{ dbt_utils.star(from = ref('players_fielding'), except = ['person_id']) }}
+      , {{ dbt_utils.star(from = ref('players_batting_postseason'), except = ['person_id']) }}
+      , {{ dbt_utils.star(from = ref('players_pitching_postseason'), except = ['person_id']) }}
+      , {{ dbt_utils.star(from = ref('players_fielding_postseason'), except = ['person_id']) }}
+      , {{ dbt_utils.star(from = ref('players_salaries'), except = ['person_id']) }}
 
     from transformed
-    inner join appearances using (person_id)
-    left join batting using (person_id)
-    left join pitching using (person_id)
-    left join fielding using (person_id)
-    left join postseason_batting using (person_id)
-    left join postseason_pitching using (person_id)
-    left join postseason_fielding using (person_id)
-    left join salaries using (person_id)
+    inner join appearances
+        on transformed.person_id = appearances.person_id
+    left join batting
+        on transformed.person_id = batting.person_id
+    left join pitching
+        on transformed.person_id = pitching.person_id
+    left join fielding
+        on transformed.person_id = fielding.person_id
+    left join postseason_batting
+        on transformed.person_id = postseason_batting.person_id
+    left join postseason_pitching
+        on transformed.person_id = postseason_pitching.person_id
+    left join postseason_fielding
+        on transformed.person_id = postseason_fielding.person_id
+    left join salaries
+        on transformed.person_id = salaries.person_id
 
 )
 

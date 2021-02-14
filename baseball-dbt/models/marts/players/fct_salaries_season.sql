@@ -7,13 +7,13 @@ with salaries as (
 transformed as (
 
     select
-        s.person_id,
-        s.year_id,
-        s.team_id,
-        s.league_id,
-        s.salary
+        salaries.person_id
+      , salaries.year_id
+      , salaries.team_id
+      , salaries.league_id
+      , salaries.salary
 
-    from salaries as s
+    from salaries
 
 )
 

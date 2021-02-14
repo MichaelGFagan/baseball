@@ -38,15 +38,16 @@ unioned as (
 
 ),
 
-transformed as (
+final as (
 
     select
-        c.person_id,
-        u.*
+        chadwick.person_id
+      , unioned.*
 
-    from unioned as u
-    left join chadwick as c using (lahman_id)
+    from unioned
+    left join chadwick
+        on unioned.lahman_id = chadwick.lahman_id
 
 )
 
-select * from transformed
+select * from final

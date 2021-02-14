@@ -7,10 +7,10 @@ with salaries as (
 transformed as (
 
     select
-        s.person_id,
-        sum(s.salary) as salary
+        salaries.person_id
+      , sum(salaries.salary) as salary
 
-    from salaries as s
+    from salaries
 
     group by 1
 

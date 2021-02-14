@@ -5,15 +5,15 @@ with managers as (
 )
 
 select
-    m.lahman_id,
-    m.year_id,
-    m.team_id,
-    m.league_id,
-    m.order_in_season,
-    m.games,
-    m.wins,
-    m.losses,
-    m.position_in_standings,
-    m.is_player_manager
+    managers.lahman_id
+  , managers.year_id
+  , managers.team_id
+  , managers.league_id
+  , managers.order_in_season
+  , managers.games
+  , managers.wins
+  , managers.losses
+  , managers.position_in_standings
+  , managers.is_player_manager
 
-from managers as m
+from managers

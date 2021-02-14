@@ -13,32 +13,34 @@ teams as (
 transformed as (
 
     select
-        f.person_id,
-        f.year_id,
-        f.stint,
-        f.team_id,
-        t.franchise_id,
-        f.league_id,
-        f.is_postseason,
-        f.position,
-        f.position_number,
-        f.games,
-        f.games_started,
-        f.outs_at_position,
-        concat(cast(trunc(f.outs_at_position / 3) as string), '.', cast(mod(f.outs_at_position, 3) as string)) as innings,
-        f.putouts,
-        f.assists,
-        f.errors,
-        f.double_plays,
-        f.triple_plays,
-        f.passed_balls,
-        f.wild_pitches,
-        f.stolen_bases_allowed,
-        f.caught_stealing,
-        f.zone_rating
+        fielding.person_id,
+        fielding.year_id,
+        fielding.stint,
+        fielding.team_id,
+        teams.franchise_id,
+        fielding.league_id,
+        fielding.is_postseason,
+        fielding.position,
+        fielding.position_number,
+        fielding.games,
+        fielding.games_started,
+        fielding.outs_at_position,
+        concat(cast(trunc(fielding.outs_at_position / 3) as string), '.', cast(mod(fielding.outs_at_position, 3) as string)) as innings,
+        fielding.putouts,
+        fielding.assists,
+        fielding.errors,
+        fielding.double_plays,
+        fielding.triple_plays,
+        fielding.passed_balls,
+        fielding.wild_pitches,
+        fielding.stolen_bases_allowed,
+        fielding.caught_stealing,
+        fielding.zone_rating
 
-    from fielding as f
-    inner join teams as t using (year_id, team_id)
+    from fielding
+    inner join teams
+        on fielding.year_id = teams.year_id
+        and fielding.team_id = teams.team_id
 
 )
 
