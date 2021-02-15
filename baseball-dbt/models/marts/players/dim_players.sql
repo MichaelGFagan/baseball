@@ -86,7 +86,7 @@ transformed as (
 
     from register
     left join people
-        register.person_id = people.person_id
+        on register.person_id = people.person_id
 
 ),
 

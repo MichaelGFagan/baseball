@@ -4,6 +4,12 @@ with appearances as (
 
 ),
 
+teams as (
+
+    select * from {{ ref('stg_lahman__teams') }}
+
+),
+
 transformed as (
 
     select
@@ -32,6 +38,9 @@ transformed as (
       , sum(ifnull(appearances.games_as_pinch_runner, 0)) as games_as_pinch_runner
 
     from appearances
+    inner join teams
+        on appearances.year_id = teams.year_id
+        and appearances.team_id = teams.team_id
 
     group by 1
 

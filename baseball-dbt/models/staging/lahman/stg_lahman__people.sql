@@ -40,7 +40,7 @@ transformed as (
       , source.deathstate as death_state
       , source.deathcity as death_city
 
-    from source as s
+    from source
 
 ),
 
@@ -52,7 +52,7 @@ final as (
 
     from transformed
     left join chadwick
-        transformed.lahman_id = chadwick.lahman_id
+        on transformed.lahman_id = chadwick.lahman_id
 
 )
 

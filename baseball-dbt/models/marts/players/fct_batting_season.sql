@@ -35,7 +35,7 @@ sums as (
       , sum(ifnull(batting.ground_into_double_plays, 0)) as ground_into_double_plays
       , sum(ifnull(batting.on_base_denominator, 0)) as on_base_denominator
 
-    from batting as b
+    from batting
 
     group by 1, 2, 3
 
@@ -81,7 +81,7 @@ transformed as (
       , {{ no_divide_by_zero('sums.walks', 'sums.strikeouts', 3) }} as walk_per_strikeout
       , {{ no_divide_by_zero('sums.strikeouts', 'sums.walks', 3) }} as strikeout_per_walk
 
-    from sums as s
+    from sums
 
 )
 

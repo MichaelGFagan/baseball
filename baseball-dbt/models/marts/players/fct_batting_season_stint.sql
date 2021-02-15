@@ -4,6 +4,12 @@ with batting as (
 
 ),
 
+teams as (
+
+    select * from {{ ref('stg_lahman__teams') }}
+
+),
+
 transformed as (
 
     select
@@ -46,7 +52,10 @@ transformed as (
       , {{ no_divide_by_zero('batting.walks', 'batting.strikeouts', 3) }} as walk_per_strikeout
       , {{ no_divide_by_zero('batting.strikeouts', 'batting.walks', 3) }} as strikeout_per_walk
 
-    from batting as b
+    from batting
+    inner join teams
+        on batting.year_id = teams.year_id
+        and batting.team_id = teams.team_id
 
 )
 

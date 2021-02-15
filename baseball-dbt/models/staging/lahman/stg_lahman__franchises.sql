@@ -15,7 +15,7 @@ transformed as (
         end as is_active
       , source.naassoc as national_association_team_id
 
-    from source as s
+    from source
 
 )
 

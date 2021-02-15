@@ -39,7 +39,7 @@ transformed  as (
       , cast(source.cs as int64) as caught_stealing
       , null as zone_rating
 
-    from source as s
+    from source
 
 )
 

@@ -40,7 +40,7 @@ sums as (
       , {{ all_null_or_sum('pitching.sacrifice_flies') }} as sacrifice_flies
       , {{ all_null_or_sum('pitching.ground_into_double_plays') }} as ground_into_double_plays
 
-    from pitching as p
+    from pitching
 
     group by 1
 

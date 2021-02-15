@@ -35,7 +35,7 @@ sums as (
       , sum(ifnull(pitching.sacrifice_flies, 0)) as sacrifice_flies
       , sum(ifnull(pitching.ground_into_double_plays, 0)) as ground_into_double_plays
 
-    from pitching as p
+    from pitching
 
     group by 1, 2, 3
 
@@ -86,7 +86,7 @@ transformed as (
       , {{ no_divide_by_zero('sums.walks', 'sums.batters_faced', 3) }} as walks_allowed_rate
       , {{ no_divide_by_zero('sums.home_runs', 'sums.batters_faced', 3) }} as home_runs_allowed_rate
 
-    from sums as s
+    from sums
 
 )
 

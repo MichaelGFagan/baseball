@@ -20,7 +20,7 @@ transformed as (
       , cast(source.game_year as int64) as game_year
         -- E = EX, S = ST, R = RS, F = WC, D = DS, L = LC, W = WS
       , cast(source.game_type as string) as game_type
-        cast(source.home_team as string) as home_team
+      , cast(source.home_team as string) as home_team
       , cast(source.away_team as string) as away_team
       , cast(source.home_score as int64) as home_score
       , cast(source.away_score as int64) as away_score

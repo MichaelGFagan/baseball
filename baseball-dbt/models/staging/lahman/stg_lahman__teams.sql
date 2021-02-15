@@ -65,7 +65,7 @@ transformed as (
       , cast(source.bpf as int64) as batting_park_factor
       , cast(source.ppf as int64) as pitching_park_factor
 
-    from source as s
+    from source
 
 )
 

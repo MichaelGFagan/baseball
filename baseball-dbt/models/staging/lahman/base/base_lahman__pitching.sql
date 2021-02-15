@@ -37,7 +37,7 @@ transformed as (
       , cast(source.sf as int64) as sacrifice_flies
       , cast(source.gidp as int64) as ground_into_double_plays
 
-    from source as s
+    from source
 
 )
 

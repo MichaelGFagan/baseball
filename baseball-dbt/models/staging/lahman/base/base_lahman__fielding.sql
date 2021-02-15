@@ -39,7 +39,7 @@ transformed as (
       , cast(source.cs as int64) as caught_stealing
       , cast(source.zr as int64) as zone_rating
 
-    from source as s
+    from source
 
 )
 

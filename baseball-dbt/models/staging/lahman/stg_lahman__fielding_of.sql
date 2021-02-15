@@ -27,48 +27,48 @@ transformed as (
 left_field as (
 
     select
-        renamed.lahman_id
-      , renamed.stint
-      , renamed.year_id
+        transformed.lahman_id
+      , transformed.stint
+      , transformed.year_id
       , 'LF' as position
       , 7 as position_number
-      , renamed.games_at_left_field as games
+      , transformed.games_at_left_field as games
 
-    from renamed
+    from transformed
 
-    where renamed.games_at_left_field is not null and renamed.games_at_left_field > 0
+    where transformed.games_at_left_field is not null and transformed.games_at_left_field > 0
 
 ),
 
 center_field as (
 
     select
-        renamed.lahman_id
-      , renamed.stint
-      , renamed.year_id
+        transformed.lahman_id
+      , transformed.stint
+      , transformed.year_id
       , 'CF' as position
       , 8 as position_number
-      , renamed.games_at_center_field as games
+      , transformed.games_at_center_field as games
 
-    from renamed
+    from transformed
 
-    where renamed.games_at_center_field is not null and renamed.games_at_center_field > 0
+    where transformed.games_at_center_field is not null and transformed.games_at_center_field > 0
 
 ),
 
 right_field as (
 
     select
-        renamed.lahman_id
-      , renamed.stint
-      , renamed.year_id
+        transformed.lahman_id
+      , transformed.stint
+      , transformed.year_id
       , 'RF' as position
       , 9 as position_number
-      , renamed.games_at_right_field as games
+      , transformed.games_at_right_field as games
 
-    from renamed
+    from transformed
 
-    where renamed.games_at_right_field is not null and renamed.games_at_right_field > 0
+    where transformed.games_at_right_field is not null and transformed.games_at_right_field > 0
 
 ),
 
