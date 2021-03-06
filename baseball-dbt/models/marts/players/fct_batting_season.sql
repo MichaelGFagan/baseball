@@ -4,47 +4,57 @@ with batting as (
 
 ),
 
+baseball_reference_war as (
+
+    select * from {{ ref('stg_lahman__batting')}}
+
+),
+
 sums as (
 
     select
-        batting.person_id
+        batting.player_year_id
+      , batting.person_id
       , batting.year_id
       , batting.is_postseason
       , count(distinct batting.team_id) as teams
-      , sum(ifnull(batting.games, 0)) as games
-      , sum(ifnull(batting.plate_appearances, 0)) as plate_appearances
-      , sum(ifnull(batting.at_bats, 0)) as at_bats
-      , sum(ifnull(batting.runs, 0)) as runs
-      , sum(ifnull(batting.hits, 0)) as hits
-      , sum(ifnull(batting.doubles, 0)) as doubles
-      , sum(ifnull(batting.triples, 0)) as triples
-      , sum(ifnull(batting.home_runs, 0)) as home_runs
-      , sum(ifnull(batting.times_on_base, 0)) as times_on_base
-      , sum(ifnull(batting.outs_made, 0)) as outs_made
-      , sum(ifnull(batting.extra_base_hits, 0)) as extra_base_hits
-      , sum(ifnull(batting.total_bases, 0)) as total_bases
-      , sum(ifnull(batting.runs_batted_in, 0)) as runs_batted_in
-      , sum(ifnull(batting.stolen_bases, 0)) as stolen_bases
-      , sum(ifnull(batting.caught_stealing, 0)) as caught_stealing
-      , sum(ifnull(batting.walks, 0)) as walks
-      , sum(ifnull(batting.strikeouts, 0)) as strikeouts
-      , sum(ifnull(batting.intentional_walks, 0)) as intentional_walks
-      , sum(ifnull(batting.hit_by_pitches, 0)) as hit_by_pitches
-      , sum(ifnull(batting.sacrifice_hits, 0)) as sacrifice_hits
-      , sum(ifnull(batting.sacrifice_flies, 0)) as sacrifice_flies
-      , sum(ifnull(batting.ground_into_double_plays, 0)) as ground_into_double_plays
-      , sum(ifnull(batting.on_base_denominator, 0)) as on_base_denominator
+      , {{ all_null_or_sum('batting.games') }} as games
+      , {{ all_null_or_sum('batting.plate_appearances') }} as plate_appearances
+      , {{ all_null_or_sum('batting.at_bats') }} as at_bats
+      , {{ all_null_or_sum('batting.runs') }} as runs
+      , {{ all_null_or_sum('batting.hits') }} as hits
+      , {{ all_null_or_sum('batting.doubles') }} as doubles
+      , {{ all_null_or_sum('batting.triples') }} as triples
+      , {{ all_null_or_sum('batting.home_runs') }} as home_runs
+      , {{ all_null_or_sum('batting.times_on_base') }} as times_on_base
+      , {{ all_null_or_sum('batting.outs_made') }} as outs_made
+      , {{ all_null_or_sum('batting.extra_base_hits') }} as extra_base_hits
+      , {{ all_null_or_sum('batting.total_bases') }} as total_bases
+      , {{ all_null_or_sum('batting.runs_batted_in') }} as runs_batted_in
+      , {{ all_null_or_sum('batting.stolen_bases') }} as stolen_bases
+      , {{ all_null_or_sum('batting.caught_stealing') }} as caught_stealing
+      , {{ all_null_or_sum('batting.walks') }} as walks
+      , {{ all_null_or_sum('batting.strikeouts') }} as strikeouts
+      , {{ all_null_or_sum('batting.intentional_walks') }} as intentional_walks
+      , {{ all_null_or_sum('batting.hit_by_pitches') }} as hit_by_pitches
+      , {{ all_null_or_sum('batting.sacrifice_hits') }} as sacrifice_hits
+      , {{ all_null_or_sum('batting.sacrifice_flies') }} as sacrifice_flies
+      , {{ all_null_or_sum('batting.ground_into_double_plays') }} as ground_into_double_plays
+      , {{ all_null_or_sum('batting.on_base_denominator') }} as on_base_denominator
 
     from batting
+    left join baseball_reference_war
+        on batting.player_year_id = baseball_reference_war.player_year_id
 
-    group by 1, 2, 3
+    group by 1, 2, 3, 4
 
 ),
 
 transformed as (
 
     select
-        sums.person_id
+        sums.player_year_id
+      , sums.person_id
       , sums.year_id
       , sums.is_postseason
       , sums.teams

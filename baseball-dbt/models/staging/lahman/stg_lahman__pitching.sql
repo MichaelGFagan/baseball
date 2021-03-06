@@ -1,4 +1,4 @@
-with pitching as (
+ with pitching as (
 
     select * from {{ ref('base_lahman__pitching') }}
 
@@ -29,7 +29,10 @@ unioned as (
 final as (
 
     select
-        chadwick.person_id
+        {{ dbt_utils.surrogate_key(['chadwick.person_id', 'unioned.stint', 'unioned.team_id', 'unioned.league_id', 'unioned.year_id', 'FALSE']) }} as player_stint_year_id
+      , {{ dbt_utils.surrogate_key(['chadwick.person_id', 'unioned.team_id', 'unioned.year_id', 'FALSE']) }} as player_year_team_id
+      , {{ dbt_utils.surrogate_key(['chadwick.person_id', 'unioned.year_id', 'FALSE']) }} as player_year_id
+      , chadwick.person_id
       , unioned.*
 
     from unioned

@@ -11,29 +11,29 @@ sums as (
       , pitching.year_id
       , pitching.is_postseason
       , count(distinct pitching.team_id) as teams
-      , sum(ifnull(pitching.wins, 0)) as wins
-      , sum(ifnull(pitching.losses, 0)) as losses
-      , sum(ifnull(pitching.games, 0)) as games
-      , sum(ifnull(pitching.games_started, 0)) as games_started
-      , sum(ifnull(pitching.games_finished, 0)) as games_finished
-      , sum(ifnull(pitching.complete_games, 0)) as complete_games
-      , sum(ifnull(pitching.shutouts, 0)) as shutouts
-      , sum(ifnull(pitching.saves, 0)) as saves
-      , sum(ifnull(pitching.batters_faced, 0)) as batters_faced
-      , sum(ifnull(pitching.outs_pitched, 0)) as outs_pitched
-      , sum(ifnull(pitching.hits, 0)) as hits
-      , sum(ifnull(pitching.runs, 0)) as runs
-      , sum(ifnull(pitching.earned_runs, 0)) as earned_runs
-      , sum(ifnull(pitching.home_runs, 0)) as home_runs
-      , sum(ifnull(pitching.walks, 0)) as walks
-      , sum(ifnull(pitching.strikeouts, 0)) as strikeouts
-      , sum(ifnull(pitching.intentional_walks, 0)) as intentional_walks
-      , sum(ifnull(pitching.hit_by_pitches, 0)) as hit_by_pitches
-      , sum(ifnull(pitching.wild_pitches, 0)) as wild_pitches
-      , sum(ifnull(pitching.balks, 0)) as balks
-      , sum(ifnull(pitching.sacrifice_hits, 0)) as sacrifice_hits
-      , sum(ifnull(pitching.sacrifice_flies, 0)) as sacrifice_flies
-      , sum(ifnull(pitching.ground_into_double_plays, 0)) as ground_into_double_plays
+      , {{ all_null_or_sum('pitching.wins') }} as wins
+      , {{ all_null_or_sum('pitching.losses') }} as losses
+      , {{ all_null_or_sum('pitching.games') }} as games
+      , {{ all_null_or_sum('pitching.games_started') }} as games_started
+      , {{ all_null_or_sum('pitching.games_finished') }} as games_finished
+      , {{ all_null_or_sum('pitching.complete_games') }} as complete_games
+      , {{ all_null_or_sum('pitching.shutouts') }} as shutouts
+      , {{ all_null_or_sum('pitching.saves') }} as saves
+      , {{ all_null_or_sum('pitching.batters_faced') }} as batters_faced
+      , {{ all_null_or_sum('pitching.outs_pitched') }} as outs_pitched
+      , {{ all_null_or_sum('pitching.hits') }} as hits
+      , {{ all_null_or_sum('pitching.runs') }} as runs
+      , {{ all_null_or_sum('pitching.earned_runs') }} as earned_runs
+      , {{ all_null_or_sum('pitching.home_runs') }} as home_runs
+      , {{ all_null_or_sum('pitching.walks') }} as walks
+      , {{ all_null_or_sum('pitching.strikeouts') }} as strikeouts
+      , {{ all_null_or_sum('pitching.intentional_walks') }} as intentional_walks
+      , {{ all_null_or_sum('pitching.hit_by_pitches') }} as hit_by_pitches
+      , {{ all_null_or_sum('pitching.wild_pitches') }} as wild_pitches
+      , {{ all_null_or_sum('pitching.balks') }} as balks
+      , {{ all_null_or_sum('pitching.sacrifice_hits') }} as sacrifice_hits
+      , {{ all_null_or_sum('pitching.sacrifice_flies') }} as sacrifice_flies
+      , {{ all_null_or_sum('pitching.ground_into_double_plays') }} as ground_into_double_plays
 
     from pitching
 

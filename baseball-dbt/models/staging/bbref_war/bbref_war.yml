@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: bbref_war
+    database: baseball-source
+    schema: bbref_war
+    tables:
+      - name: batting
+      - name: pitching
