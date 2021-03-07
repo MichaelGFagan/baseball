@@ -1,12 +1,20 @@
 {% macro statcast_template() %}
 
+{# {% set table_name = 'statcast_' ~ year %} #}
+
+{# with source as (
+    
+    select * from {{ source('statcast', table_name) }}
+    
+),
+
 chadwick as (
 
     select * from {{ ref('util_chadwick__register') }}
 
 ),
 
-transformed as (
+transformed as ( #}
 
     select
         md5(concat(cast(cast(source.game_pk as int64) as string), cast(source.index as string))) as statcast_pitch_id
@@ -39,19 +47,19 @@ transformed as (
       , cast(source.outs_when_up as int64) as outs
       , cast(source.if_fielding_alignment as string) as infield_alignment
       , cast(source.of_fielding_alignment as string) as outfield_alignment
-      , batter.person_id as batter_person_id
-      , pitcher.person_id as pitcher_person_id
-      , catcher.person_id as catcher_person_id
-      , first_base.person_id as first_base_person_id
-      , second_base.person_id as second_base_person_id
-      , third_base.person_id as third_base_person_id
-      , shortstop.person_id as shortstop_person_id
-      , left_field.person_id as left_field_person_id
-      , center_field.person_id as center_field_person_id
-      , right_field.person_id as right_field_person_id
-      , runner_on_first.person_id as runner_on_first_person_id
-      , runner_on_second.person_id as runner_on_second_person_id
-      , runner_on_third.person_id as runner_on_third_person_id
+      , cast(source.batter as int64) as batter_mlbam_id
+      , cast(source.pitcher as int64) as pitcher_mlbam_id
+      , cast(source.fielder_2 as int64) as catcher_mlbam_id
+      , cast(source.fielder_3 as int64) as first_base_mlbam_id
+      , cast(source.fielder_4 as int64) as second_base_mlbam_id
+      , cast(source.fielder_5 as int64) as third_base_mlbam_id
+      , cast(source.fielder_6 as int64) as shortstop_mlbam_id
+      , cast(source.fielder_7 as int64) as left_field_mlbam_id
+      , cast(source.fielder_8 as int64) as center_field_mlbam_id
+      , cast(source.fielder_9 as int64) as right_field_mlbam_id
+      , cast(source.on_1b as int64) as runner_on_first_mlbam_id
+      , cast(source.on_2b as int64) as runner_on_second_mlbam_id
+      , cast(source.on_3b as int64) as runner_on_third_mlbam_id
       , cast(source.pitch_type as string) as pitch_type
       , cast(source.pitch_name as string) as pitch_name
       , cast(source.sz_top as numeric) as strike_zone_top
@@ -93,7 +101,7 @@ transformed as (
       , cast(source.babip_value as int64) as babip_value
       , cast(source.iso_value as int64) as number_of_extra_bases
 
-    from source
+    {# from source
     left join chadwick as batter
         on source.batter = batter.mlbam_id
     left join chadwick as pitcher
@@ -119,10 +127,10 @@ transformed as (
     left join chadwick as runner_on_second
         on source.on_2b = runner_on_second.mlbam_id
     left join chadwick as runner_on_third
-        on source.on_3b = runner_on_third.mlbam_id
+        on source.on_3b = runner_on_third.mlbam_id #}
 
-)
+{# )
 
-select * from transformed
+select * from transformed #}
 
 {% endmacro %}
