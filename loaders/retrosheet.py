@@ -18,12 +18,6 @@ credentials = service_account.Credentials.from_service_account_file(
 )
 project_id = 'baseball-source'
 
-# client = bq.Client.from_service_account_json("../../bigquery_credentials.json", project="baseball-source")
-#
-# project_id = "baseball-source"
-# dataset_id = "retrosheet"
-# dataset_ref = client.dataset(dataset_id)
-
 years = range(start, end)
 
 for year in years:
