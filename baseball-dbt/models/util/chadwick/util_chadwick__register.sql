@@ -15,16 +15,16 @@ transformed as (
     select
         source.key_uuid as person_id
       , lahman.playerid as lahman_id
-      , source.key_mlbam as mlbam_id
+      , cast(source.key_mlbam as int64) as mlbam_id
       , source.key_retro as retrosheet_id
       , source.key_bbref as baseball_reference_id
       , source.key_bbref_minors as baseball_reference_minor_league_id
-      , source.key_fangraphs as fangraphs_id
-      , source.key_npb as npb_id
+      , cast(source.key_fangraphs as int64) as fangraphs_id
+      , cast(source.key_npb as int64) as npb_id
       , source.key_sr_nfl as pro_football_reference_id
       , source.key_sr_nba as basketball_reference_id
       , source.key_sr_nhl as hockey_reference_id
-      , source.key_findagrave as findagrave_id
+      , cast(source.key_findagrave as int64) as findagrave_id
       , source.name_last as last_name
       , source.name_first as first_name
       , source.name_given as given_name

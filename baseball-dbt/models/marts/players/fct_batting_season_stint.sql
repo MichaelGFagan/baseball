@@ -39,7 +39,7 @@ transformed as (
       , {{ no_divide_by_zero('batting.hits', 'batting.at_bats', 3) }} as batting_average
       , {{ no_divide_by_zero('batting.times_on_base', 'batting.on_base_denominator', 3) }} as on_base_percentage
       , {{ no_divide_by_zero('batting.total_bases', 'batting.at_bats', 3) }} as slugging_percentage
-      , {{ no_divide_by_zero('batting.times_on_base', 'batting.on_base_denominator', 3) }} + {{ no_divide_by_zero('batting.total_bases', 'batting.at_bats', 3) }} as on_base_plus_slugging
+      , round({{ no_divide_by_zero('batting.times_on_base', 'batting.on_base_denominator', 9) }} + {{ no_divide_by_zero('batting.total_bases', 'batting.at_bats', 9) }}, 3) as on_base_plus_slugging
       , batting.intentional_walks
       , batting.hit_by_pitches
       , batting.sacrifice_hits

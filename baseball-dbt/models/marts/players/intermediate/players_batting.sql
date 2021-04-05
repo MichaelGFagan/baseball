@@ -64,7 +64,7 @@ transformed as (
       , {{ no_divide_by_zero('sums.hits', 'sums.at_bats', 3) }} as batting_average
       , {{ no_divide_by_zero('sums.times_on_base', 'sums.on_base_denominator', 3) }} as on_base_percentage
       , {{ no_divide_by_zero('sums.total_bases', 'sums.at_bats', 3) }} as slugging_percentage
-      , {{ no_divide_by_zero('sums.times_on_base', 'sums.on_base_denominator', 3) }} + {{ no_divide_by_zero('sums.total_bases', 'sums.at_bats', 3) }} as on_base_plus_slugging
+      , round({{ no_divide_by_zero('sums.times_on_base', 'sums.on_base_denominator', 9) }} + {{ no_divide_by_zero('sums.total_bases', 'sums.at_bats', 9) }}, 3) as on_base_plus_slugging
       , sums.intentional_walks
       , sums.hit_by_pitches
       , sums.sacrifice_hits
