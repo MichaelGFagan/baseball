@@ -109,8 +109,8 @@ transformed as (
       , round(cast(source.bsr as numeric), 1) as base_running_runs_above_average
       , round(cast(source.fld as numeric), 1) as fielding_runs_above_average
       , round(cast(source.pos as numeric), 1) as positional_runs_adjustment
-      , round(cast(source.off as numeric), 1) as offense_runs_above_average_runs
-      , round(cast(source.def as numeric), 1) as defense_runs_above_average_runs
+      , round(cast(source.off as numeric), 1) as offense_runs_above_average
+      , round(cast(source.def as numeric), 1) as defense_runs_above_average
       , round(cast(source.rar as numeric), 1) as runs_above_replacement
       , round(cast(source.lg as numeric), 1) as league_zero_out_adjustment
       , round(cast(source.rep as numeric), 1) as replacement_runs
