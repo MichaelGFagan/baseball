@@ -82,10 +82,6 @@ transformed as (
       , cast(source.balls as int64) as balls
       , cast(source.strikes as int64) as strikes
       , cast(source.pitches as int64) as pitches
-      -- exit velocity
-      -- launch angle
-      -- barrels
-      -- barrel %
       
       , round(cast(source.k_9 as numeric), 2) as strikeouts_per_nine
       , round(cast(source.bb_9 as numeric), 2) as walks_per_nine
