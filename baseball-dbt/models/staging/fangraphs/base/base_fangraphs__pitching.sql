@@ -44,6 +44,7 @@ transformed as (
       , source.name
       , source.team
       , cast(source.age as int64) as age
+      , source.age_rng as age_range
       
       , cast(source.w as int64) as wins
       , cast(source.l as int64) as losses
@@ -90,7 +91,7 @@ transformed as (
       , round(cast(source.bb_9 as numeric), 2) as walks_per_nine
       , round(cast(source.k_bb as numeric), 2) as strikeouts_per_walk
       , round(cast(source.h_9 as numeric), 2) as hits_per_nine
-      , round(cast(source.h4_9 as numeric), 2) as home_runs_per_nine
+      , round(cast(source.hr_9 as numeric), 2) as home_runs_per_nine
       , round(cast(source.k_pct as numeric), 3) as strikeout_percentage
       , round(cast(source.bb_pct as numeric), 3) as walk_percentage
       , round(cast(source.k_bb_pct as numeric), 3) as strikeouts_per_walk_percentage
@@ -102,6 +103,7 @@ transformed as (
       , cast(source.fip_minus as int64) as fip_minus
       , cast(source.xfip_minus as int64) as xfip_minus
       , round(cast(source.fip as numeric), 2) as fielding_independent_pitching
+      , round(cast(source.kwera as numeric), 2) as strikeout_walk_era
       
       , round(cast(source.gb_fb as numeric), 2) as ground_balls_per_fly_balls
       , round(cast(source.ld_pct as numeric), 3) as line_drive_percentage
@@ -111,12 +113,13 @@ transformed as (
       , round(cast(source.hr_fb as numeric), 3) as home_runs_per_fly_ball
       , round(cast(source.ifh_pct as numeric), 3) as infield_hit_percentage
       , round(cast(source.buh_pct as numeric), 3) as bunt_hit_percentage
-      -- pull %
-      -- cent %
-      -- oppo %
-      -- soft %
-      -- med %
-      -- hard %
+      , round(cast(source.tto_pct as numeric), 3) as three_true_outcomes_percentage
+      , round(cast(source.pull_pct as numeric), 3) as pull_percentage
+      , round(cast(source.cent_pct as numeric), 3) as straightaway_percentage
+      , round(cast(source.oppo_pct as numeric), 3) as opposite_field_percentage
+      , round(cast(source.soft_pct as numeric), 3) as soft_hit_percentage
+      , round(cast(source.med_pct as numeric), 3) as medium_hit_percentage
+      , round(cast(source.hard_pct as numeric), 3) as hard_hit_percentage
       , round(cast(source.siera as numeric), 2) as skill_interactive_era
       , round(cast(source.rs_9 as numeric), 2) as run_support_per_nine
       , round(cast(source.e_f as numeric), 2) as era_minus_fip
@@ -126,12 +129,17 @@ transformed as (
       , round(cast(source.relieving as numeric), 1) as runs_above_replacement_as_reliever
       , cast(round(cast(source.relief_ip as numeric), 1) as string) as innings_pitched_as_reliever
       , round(cast(source.rar as numeric), 1) as runs_above_replacement
+      , round(cast(source.ra9_war as numeric), 1) as wins_above_replacement_runs_allowed
+      , round(cast(source.bip_wins as numeric), 1) as wins_above_replacement_babip
+      , round(cast(source.lob_wins as numeric), 1) as wins_above_replacement_left_on_base
+      , round(cast(source.fdp_wins as numeric), 1) as wins_above_replacement_fielding_dependent
+      , round(cast(source.war as numeric), 1) as wins_above_replacement
       , round(cast(regexp_replace(source.dollars, '[\\$\\(\\)]', '') as numeric), 1) as wins_above_replacement_dollar_value
-      , round(cast(source.tera), 2) as batted_ball_era_estimator
-      , round(cast(source.xfip), 2) as expected_fielder_independent_pitching
-      , round(cast(source.wpa), 2) as win_probability_added
-      , round(cast(source.minus_wpa), 2) as wpa_loss_advancement
-      , round(cast(source.plus_wpa), 2) as wpa_win_advancement
+      , round(cast(source.tera as numeric), 2) as batted_ball_era_estimator
+      , round(cast(source.xfip as numeric), 2) as expected_fielder_independent_pitching
+      , round(cast(source.wpa as numeric), 2) as win_probability_added
+      , round(cast(source.minus_wpa as numeric), 2) as wpa_loss_advancement
+      , round(cast(source.plus_wpa as numeric), 2) as wpa_win_advancement
       , round(cast(source.re24 as numeric), 2) as run_expectancy_24
       , round(cast(source.rew as numeric), 2) as run_expectancy_wins
       , round(cast(source.pli as numeric), 2) as average_leverage_index
@@ -182,134 +190,6 @@ transformed as (
       , round(cast(source.f_strike_pct as numeric), 3) as first_pitch_strike_percentage_bis
       , round(cast(source.swstr_pct as numeric), 3) as swinging_strike_percentage_bis
       
-      , round(cast(source.war as numeric), 1) as wins_above_replacement
-      
-      
-      
-      
-      , source.age_rng as age_range
-      , cast(source.g as int64) as games
-      , cast(source.ab as int64) as at_bats
-      , cast(source.pa as int64) as plate_appearances
-      , cast(source.h as int64) as hits
-      , cast(source._1b as int64) as singles
-      , cast(source._2b as int64) as doubles
-      , cast(source._3b as int64) as triples
-      , cast(source.hr as int64) as home_runs
-      , cast(source.r as int64) as runs
-      , cast(source.rbi as int64) as runs_batted_in
-      , cast(source.bb as int64) as walks
-      , cast(source.ibb as int64) as intentional_walks
-      , cast(source.so as int64) as strikeouts
-      , cast(source.hbp as int64) as hit_by_pitches
-      , cast(source.sf as int64) as sacrifice_flies
-      , cast(source.sh as int64) as sacrifice_hits
-      , cast(source.gdp as int64) as ground_into_double_plays
-      , cast(source.sb as int64) as stolen_bases
-      , cast(source.cs as int64) as caught_stealing
-      , round(cast(source.avg as numeric), 3) as batting_average
-      , cast(source.gb as int64) as ground_balls
-      , cast(source.fb as int64) as fly_balls
-      , cast(source.ld as int64) as line_drives
-      , cast(source.iffb as int64) as infield_fly_balls
-      , cast(source.pitches as int64) as pitches
-      , cast(source.balls as int64) as balls
-      , cast(source.strikes as int64) as strikes
-      , cast(source.ifh as int64) as infield_hits
-      , cast(source.bu as int64) as bunts
-      , cast(source.buh as int64) as bunt_hits
-      , round(cast(source.bb_pct as numeric), 3) as walk_percentage
-      , round(cast(source.k_pct as numeric), 3) as strikeout_percentage
-      , round(cast(source.bb_k as numeric), 3) as walks_per_strikeout
-      , round(cast(source.obp as numeric), 3) as on_base_percentage
-      , round(cast(source.slg as numeric), 3) as slugging_percentage
-      , round(cast(source.ops as numeric), 3) as on_base_plus_slugging
-      , round(cast(source.iso as numeric), 3) as isolated_power
-      , round(cast(source.babip as numeric), 3) as batting_average_on_balls_in_play
-      , round(cast(source.gb_fb as numeric), 3) as ground_balls_per_fly_ball
-      , round(cast(source.ld_pct as numeric), 3) as line_drive_percentage
-      , round(cast(source.gb_pct as numeric), 3) as ground_ball_percentage
-      , round(cast(source.fb_pct as numeric), 3) as fly_ball_percentage
-      , round(cast(source.iffb_pct as numeric), 3) as infield_fly_ball_percentage
-      , round(cast(source.hr_fb as numeric), 3) as home_runs_per_fly_ball
-      , round(cast(source.ifh as numeric), 3) as infield_hit_percentage
-      , round(cast(source.buh_pct as numeric), 3) as bunt_hit_percentage
-      , round(cast(source.tto_pct as numeric), 3) as three_true_outcomes_percentage
-      , round(cast(source.pull_pct as numeric), 3) as pull_percentage
-      , round(cast(source.cent_pct as numeric), 3) as straightaway_percentage
-      , round(cast(source.oppo_pct as numeric), 3) as opposite_field_percentage
-      , round(cast(source.soft_pct as numeric), 3) as soft_hit_percentage
-      , round(cast(source.med_pct as numeric), 3) as medium_hit_percentage
-      , round(cast(source.hard_pct as numeric), 3) as hard_hit_percentage
-      , round(cast(source.ubr as numeric), 1) as ultimate_base_running_runs_above_average
-      , round(cast(source.wgdp as numeric), 1) as ground_into_double_plays_runs_above_average
-      , round(cast(source.wsb as numeric), 1) as stolen_bases_runs_above_average
-      , cast(source.wrc as int64) as woba_runs_created
-      , round(cast(source.wraa as numeric), 1) as woba_runs_above_average
-      , round(cast(source.woba as numeric), 3) as weighted_on_base_average
-      , cast(source.wrc_plus as int64) as woba_runs_created_plus
-      , round(cast(source.bat as numeric), 1) as batting_runs_above_average
-      , round(cast(source.bsr as numeric), 1) as base_running_runs_above_average
-      , round(cast(source.fld as numeric), 1) as fielding_runs_above_average
-      , round(cast(source.pos as numeric), 1) as positional_runs_adjustment
-      , round(cast(source.off as numeric), 1) as offense_runs_above_average_runs
-      , round(cast(source.def as numeric), 1) as defense_runs_above_average_runs
-      , round(cast(source.rar as numeric), 1) as runs_above_replacement
-      , round(cast(source.lg as numeric), 1) as league_zero_out_adjustment
-      , round(cast(source.rep as numeric), 1) as replacement_runs
-      , round(cast(source.war as numeric), 1) as wins_above_replacement
-      , round(cast(regexp_replace(source.dol, '[\\$\\(\\)]', '') as numeric), 1) as wins_above_replacement_dollar_value
-      , round(cast(source.spd as numeric), 1) as speed_score
-      , round(cast(source.wpa as numeric), 2) as win_probability_added
-      , round(cast(source.minus_wpa as numeric), 2) as wpa_loss_advancement
-      , round(cast(source.plus_wpa as numeric), 2) as wpa_win_advancement
-      , round(cast(source.re24 as numeric), 2) as run_expectancy_24
-      , round(cast(source.rew as numeric), 2) as run_expectancy_wins
-      , round(cast(source.pli as numeric), 2) as average_leverage_index
-      , round(cast(source.phli as numeric), 2) as average_pinch_hitting_leverage_index
-      , cast(source.ph as int64) as pinch_hit_opportunities
-      , round(cast(source.wpa_li as numeric), 2) as context_neutral_wins
-      , round(cast(source.clutch as numeric), 2) as clutch
-      , round(cast(source.fb_pct_pitch as numeric), 2) as fastball_pct_bis
-      , round(cast(source.sl_pct as numeric), 2) as slider_percentage_bis
-      , round(cast(source.ct_pct as numeric), 2) as cutter_percentage_bis
-      , round(cast(source.cb_pct as numeric), 2) as curveball_percentage_bis
-      , round(cast(source.ch_pct as numeric), 2) as changeup_percentage_bis
-      , round(cast(source.sf_pct as numeric), 2) as split_finger_percentage_bis
-      , round(cast(source.kn_pct as numeric), 2) as knuckleball_percentage_bis
-      , round(cast(source.xx_pct as numeric), 2) as unknown_percentage_bis
-      , round(cast(source.fbv as numeric), 2) as fastball_average_velocity_mph_bis
-      , round(cast(source.slv as numeric), 2) as slider_average_velocity_mph_bis
-      , round(cast(source.ctv as numeric), 2) as cutter_average_velocity_mph_bis
-      , round(cast(source.cbv as numeric), 2) as curveball_average_velocity_mph_bis
-      , round(cast(source.chv as numeric), 2) as changeup_average_velocity_mph_bis
-      , round(cast(source.sfv as numeric), 2) as split_finger_average_velocity_mph_bis
-      , round(cast(source.knv as numeric), 2) as knuckleball_average_velocity_mph_bis
-      , round(cast(source.wfb as numeric), 1) as fastball_runs_above_average_mph_bis
-      , round(cast(source.wsl as numeric), 1) as slider_runs_above_average_mph_bis
-      , round(cast(source.wct as numeric), 1) as cutter_runs_above_average_mph_bis
-      , round(cast(source.wcb as numeric), 1) as curveball_runs_above_average_mph_bis
-      , round(cast(source.wch as numeric), 1) as changeup_runs_above_average_mph_bis
-      , round(cast(source.wsf as numeric), 1) as split_finger_runs_above_average_mph_bis
-      , round(cast(source.wkn as numeric), 1) as knuckleball_runs_above_average_mph_bis
-      , round(cast(source.wfb_c as numeric), 1) as fastball_runs_above_average_per_100_pitches_bis
-      , round(cast(source.wsl_c as numeric), 1) as slider_runs_above_average_per_100_pitches_bis
-      , round(cast(source.wct_c as numeric), 1) as cutter_runs_above_average_per_100_pitches_bis
-      , round(cast(source.wcb_c as numeric), 1) as curveball_runs_above_average_per_100_pitches_bis
-      , round(cast(source.wch_c as numeric), 1) as changeup_runs_above_average_per_100_pitches_bis
-      , round(cast(source.wsf_c as numeric), 1) as split_finger_runs_above_average_per_100_pitches_bis
-      , round(cast(source.wkn_c as numeric), 1) as knuckleball_runs_above_average_per_100_pitches_bis
-      , round(cast(source.swing_pct as numeric), 3) as swing_percentage_bis
-      , round(cast(source.o_swing_pct as numeric), 3) as outside_zone_swing_percentage_bis
-      , round(cast(source.z_swing_pct as numeric), 3) as inside_zone_swing_percentage_bis
-      , round(cast(source.contact_pct as numeric), 3) as contact_percentage_bis
-      , round(cast(source.o_contact_pct as numeric), 3) as outside_zone_contact_percentage_bis
-      , round(cast(source.z_swing_pct as numeric), 3) as inside_zone_contact_percentage_bis
-      , round(cast(source.zone_pct as numeric), 3) as pitches_seen_inside_zone_percentage_bis
-      , round(cast(source.f_strike_pct as numeric), 3) as first_pitch_strike_percentage_bis
-      , round(cast(source.swstr_pct as numeric), 3) as swinging_strike_percentage_bis
-      -- called strike %
-      -- called + swinging strike %
       , round(cast(source.fa_pct_sc as numeric), 3) as four_seamer_percentage_sc
       , round(cast(source.ft_pct_sc as numeric), 3) as two_seamer_percentage_sc
       , round(cast(source.fc_pct_sc as numeric), 3) as cutter_percentage_sc
@@ -397,6 +277,7 @@ transformed as (
       , round(cast(source.z_contact_pct_sc as numeric), 3) as inside_zone_contact_percentage_sc
       , round(cast(source.zone_pct_sc as numeric), 3) as pitches_seen_inside_zone_percentage_sc
       , round(cast(source.pace as numeric), 1) as average_time_between_pitches_seconds_sc
+      
       , round(cast(source.fa_pct_pi as numeric), 3) as four_seamer_percentage_pi
       , round(cast(source.fc_pct_pi as numeric), 3) as cutter_percentage_pi
       , round(cast(source.fs_pct_pi as numeric), 3) as splitter_percentage_pi
@@ -470,24 +351,28 @@ transformed as (
       , round(cast(source.o_contact_pct_pi as numeric), 3) as outside_zone_contact_percentage_pi
       , round(cast(source.z_swing_pct_pi as numeric), 3) as inside_zone_contact_percentage_pi
       , round(cast(source.pace_pi as numeric), 1) as average_time_between_pitches_seconds_pi
-      , round(cast(source.frm as numeric), 1) as framing_runs
-      , cast(source.avg_plus as int64) as batting_average_plus
-      , cast(source.bb_pct_plus as int64) as walk_percentage_plus
+      
+      , cast(source.k_9_plus as int64) as strikeouts_per_nine_plus
+      , cast(source.bb_9_plus as int64) as walks_per_nine_plus
+      , cast(source.h_9_plus as int64) as hits_per_nine_plus
+      , cast(source.hr_9_plus as int64) as home_runs_per_nine_plus
+      , cast(source.avg_plus as int64) as batting_average_against_plus
+      , cast(source.whip_plus as int64) as whip_plus
+      , cast(source.babip_plus as int64) as babip_plus
+      , cast(source.lob_pct_plus as int64) as left_on_base_percentage_plus
       , cast(source.k_pct_plus as int64) as strikeout_percentage_plus
-      , cast(source.obp_plus as int64) as on_base_percentage_plus
-      , cast(source.slg_plus as int64) as slugging_percentage_plus
-      , cast(source.iso_plus as int64) as isolated_slugging_plus
-      , cast(source.babip_plus as int64) as batting_average_on_balls_in_play_plus
-      , cast(round(cast(source.ld_pct_plus as numeric), 2) as int64) as line_drive_percentage_plus
-      , cast(source.gb_pct_plus as int64) as groundball_percentage_plus
-      , cast(source.fb_pct_plus as int64) as flyball_percentage_plus
-      , cast(source.hr_fb_pct_plus as int64) as home_runs_per_fly_ball_plus
+      , cast(source.bb_pct_plus as int64) as walk_percentage_plus
+      , cast(source.ld_pct_plus as int64) as line_drive_percentage_plus
+      , cast(source.gb_pct_plus as int64) as groun_ball_percentage_plus
+      , cast(source.fb_pct_plus as int64) as fly_ball_percentage_plus
+      , cast(source.hr_fb_pct_plus as int64) as home_runs_per_fly_ball_percentage_plus
       , cast(source.pull_pct_plus as int64) as pull_percentage_plus
       , cast(source.cent_pct_plus as int64) as straightaway_percentage_plus
       , cast(source.oppo_pct_plus as int64) as opposite_field_percentage_plus
       , cast(source.soft_pct_plus as int64) as soft_hit_percentage_plus
       , cast(source.med_pct_plus as int64) as medium_hit_percentage_plus
       , cast(source.hard_pct_plus as int64) as hard_hit_percentage_plus
+      
       , round(cast(source.ev as numeric), 1) as average_exit_velocity
       , round(cast(source.maxev as numeric), 1) as max_exit_velocity
       , round(cast(source.la as numeric), 1) as average_launch_angle
