@@ -125,6 +125,7 @@ transformed as (
       , round(cast(source.relieving as numeric), 1) as runs_above_replacement_as_reliever
       , cast(round(cast(source.relief_ip as numeric), 1) as string) as innings_pitched_as_reliever
       , round(cast(source.rar as numeric), 1) as runs_above_replacement
+      , round(cast(source.frm as numeric), 1) as framing_runs
       , round(cast(source.ra9_war as numeric), 1) as wins_above_replacement_runs_allowed
       , round(cast(source.bip_wins as numeric), 1) as wins_above_replacement_babip
       , round(cast(source.lob_wins as numeric), 1) as wins_above_replacement_left_on_base
