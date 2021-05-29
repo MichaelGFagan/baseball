@@ -1,7 +1,7 @@
 import pandas
 import pandas_gbq
 import pybaseball.lahman
-from google.oauth2 import service_accounts
+from google.oauth2 import service_account
 
 credentials = service_account.Credentials.from_service_account_file(
     '../bigquery_credentials.json'
