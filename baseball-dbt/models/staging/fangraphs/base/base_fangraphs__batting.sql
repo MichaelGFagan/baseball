@@ -5,39 +5,39 @@
 }}
 
 {% set start_year = 1871 %}
-{% set end_year = 2020 %}
+{% set end_year = 2021 %}
 
 with source as (
-            
+
     {% for year in range(start_year, end_year) %}
-    
+
         {% set table_name = 'batting_' ~ year %}
-    
+
         {% if loop.last %}
-        
+
             select * from {{ source('fangraphs', table_name) }} as source
-            
+
         {% else %}
-        
+
             select * from {{ source('fangraphs', table_name) }} as source
-            
+
             union all
 
         {% endif %}
 
     {% endfor %}
-    
+
 ),
 
 chadwick as (
-    
+
         select * from {{ ref('util_chadwick__register') }}
-    
+
 ),
 
 transformed as (
-    
-    select 
+
+    select
         chadwick.person_id
       , cast(source.idfg as int64) as fangraphs_id
       , cast(source.season as int64) as year_id
@@ -353,11 +353,11 @@ transformed as (
       , cast(source.hardhit as int64) as hard_hit_balls
       , round(cast(source.hardhit_pct as numeric), 3) as hard_hit_ball_percentage
       , cast(source.events as int64) as statcast_batted_balls
-      
+
     from source
-    left join chadwick 
+    left join chadwick
         on cast(source.IDfg as int64) = chadwick.fangraphs_id
-    
+
 )
 
 select * from transformed

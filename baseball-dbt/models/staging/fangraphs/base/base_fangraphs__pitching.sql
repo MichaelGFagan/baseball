@@ -5,39 +5,39 @@
 }}
 
 {% set start_year = 1871 %}
-{% set end_year = 2020 %}
+{% set end_year = 2021 %}
 
 with source as (
-            
+
     {% for year in range(start_year, end_year) %}
-    
+
         {% set table_name = 'pitching_' ~ year %}
-    
+
         {% if loop.last %}
-        
+
             select * from {{ source('fangraphs', table_name) }} as source
-            
+
         {% else %}
-        
+
             select * from {{ source('fangraphs', table_name) }} as source
-            
+
             union all
 
         {% endif %}
 
     {% endfor %}
-    
+
 ),
 
 chadwick as (
-    
+
         select * from {{ ref('util_chadwick__register') }}
-    
+
 ),
 
 transformed as (
-    
-    select 
+
+    select
         chadwick.person_id
       , cast(source.idfg as int64) as fangraphs_id
       , cast(source.season as int64) as year_id
@@ -45,7 +45,7 @@ transformed as (
       , source.team
       , cast(source.age as int64) as age
       , source.age_rng as age_range
-      
+
       , cast(source.w as int64) as wins
       , cast(source.l as int64) as losses
       , round(cast(source.era as numeric), 2) as earned_run_average
@@ -71,7 +71,7 @@ transformed as (
       , cast(source.wp as int64) as wild_pitches
       , cast(source.bk as int64) as balks
       , cast(source.so as int64) as strikeouts
-      
+
       , cast(source.gb as int64) as ground_balls
       , cast(source.fb as int64) as fly_balls
       , cast(source.ld as int64) as line_drives
@@ -82,7 +82,7 @@ transformed as (
       , cast(source.balls as int64) as balls
       , cast(source.strikes as int64) as strikes
       , cast(source.pitches as int64) as pitches
-      
+
       , round(cast(source.k_9 as numeric), 2) as strikeouts_per_nine
       , round(cast(source.bb_9 as numeric), 2) as walks_per_nine
       , round(cast(source.k_bb as numeric), 2) as strikeouts_per_walk
@@ -100,7 +100,7 @@ transformed as (
       , cast(source.xfip_minus as int64) as xfip_minus
       , round(cast(source.fip as numeric), 2) as fielding_independent_pitching
       , round(cast(source.kwera as numeric), 2) as strikeout_walk_era
-      
+
       , round(cast(source.gb_fb as numeric), 2) as ground_balls_per_fly_balls
       , round(cast(source.ld_pct as numeric), 3) as line_drive_percentage
       , round(cast(source.gb_pct as numeric), 3) as ground_ball_percentage
@@ -119,7 +119,7 @@ transformed as (
       , round(cast(source.siera as numeric), 2) as skill_interactive_era
       , round(cast(source.rs_9 as numeric), 2) as run_support_per_nine
       , round(cast(source.e_f as numeric), 2) as era_minus_fip
-      
+
       , round(cast(source.starting as numeric), 1) as runs_above_replacement_as_starter
       , cast(round(cast(source.start_ip as numeric), 1) as string) as innings_pitched_as_starter
       , round(cast(source.relieving as numeric), 1) as runs_above_replacement_as_reliever
@@ -146,7 +146,7 @@ transformed as (
       , cast(source.pulls as int64) as times_pulled_from_game
       , round(cast(source.wpa_li as numeric), 2) as situational_wins
       , round(cast(source.clutch as numeric), 2) as clutch
-      
+
       , round(cast(source.fb_pct_2 as numeric), 2) as fastball_pct_bis
       , round(cast(source.sl_pct as numeric), 2) as slider_percentage_bis
       , round(cast(source.ct_pct as numeric), 2) as cutter_percentage_bis
@@ -186,7 +186,7 @@ transformed as (
       , round(cast(source.zone_pct as numeric), 3) as pitches_seen_inside_zone_percentage_bis
       , round(cast(source.f_strike_pct as numeric), 3) as first_pitch_strike_percentage_bis
       , round(cast(source.swstr_pct as numeric), 3) as swinging_strike_percentage_bis
-      
+
       , round(cast(source.fa_pct_sc as numeric), 3) as four_seamer_percentage_sc
       , round(cast(source.ft_pct_sc as numeric), 3) as two_seamer_percentage_sc
       , round(cast(source.fc_pct_sc as numeric), 3) as cutter_percentage_sc
@@ -274,7 +274,7 @@ transformed as (
       , round(cast(source.z_contact_pct_sc as numeric), 3) as inside_zone_contact_percentage_sc
       , round(cast(source.zone_pct_sc as numeric), 3) as pitches_seen_inside_zone_percentage_sc
       , round(cast(source.pace as numeric), 1) as average_time_between_pitches_seconds_sc
-      
+
       , round(cast(source.fa_pct_pi as numeric), 3) as four_seamer_percentage_pi
       , round(cast(source.fc_pct_pi as numeric), 3) as cutter_percentage_pi
       , round(cast(source.fs_pct_pi as numeric), 3) as splitter_percentage_pi
@@ -348,7 +348,7 @@ transformed as (
       , round(cast(source.o_contact_pct_pi as numeric), 3) as outside_zone_contact_percentage_pi
       , round(cast(source.z_swing_pct_pi as numeric), 3) as inside_zone_contact_percentage_pi
       , round(cast(source.pace_pi as numeric), 1) as average_time_between_pitches_seconds_pi
-      
+
       , cast(source.k_9_plus as int64) as strikeouts_per_nine_plus
       , cast(source.bb_9_plus as int64) as walks_per_nine_plus
       , cast(source.h_9_plus as int64) as hits_per_nine_plus
@@ -369,7 +369,7 @@ transformed as (
       , cast(source.soft_pct_plus as int64) as soft_hit_percentage_plus
       , cast(source.med_pct_plus as int64) as medium_hit_percentage_plus
       , cast(source.hard_pct_plus as int64) as hard_hit_percentage_plus
-      
+
       , round(cast(source.ev as numeric), 1) as average_exit_velocity
       , round(cast(source.maxev as numeric), 1) as max_exit_velocity
       , round(cast(source.la as numeric), 1) as average_launch_angle
@@ -378,11 +378,11 @@ transformed as (
       , cast(source.hardhit as int64) as hard_hit_balls
       , round(cast(source.hardhit_pct as numeric), 3) as hard_hit_ball_percentage
       , cast(source.events as int64) as statcast_batted_balls
-      
+
     from source
-    left join chadwick 
+    left join chadwick
         on cast(source.IDfg as int64) = chadwick.fangraphs_id
-    
+
 )
 
 select * from transformed
