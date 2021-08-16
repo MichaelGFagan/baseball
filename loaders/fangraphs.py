@@ -7,7 +7,7 @@ from google.oauth2 import service_account
 
 parser = argparse.ArgumentParser(description="Load Fangraphs data into Google BigQuery")
 parser.add_argument('-s', '--start', type=int, default=1871, help="first year to extract from Retrosheet")
-parser.add_argument('-e', '--end', type=int, default=2020, help="last year to extract from Retrosheet")
+parser.add_argument('-e', '--end', type=int, default=2021, help="last year to extract from Retrosheet")
 
 args = parser.parse_args()
 start = args.start
