@@ -5,11 +5,11 @@
 }}
 
 {% set start_year = 1871 %}
-{% set end_year = 2021 %}
+{% set end_year = var('current_year') %}
 
 with source as (
 
-    {% for year in range(start_year, end_year) %}
+    {% for year in range(start_year, end_year + 1) %}
 
         {% set table_name = 'pitching_' ~ year %}
 

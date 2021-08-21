@@ -18,3 +18,4 @@ sources:
       - name: statcast_2018
       - name: statcast_2019
       - name: statcast_2020
+      - name: statcast_2021

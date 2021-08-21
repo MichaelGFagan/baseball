@@ -155,6 +155,7 @@ sources:
       - name: batting_2018
       - name: batting_2019
       - name: batting_2020
+      - name: batting_2021
       - name: pitching_1871
       - name: pitching_1872
       - name: pitching_1873
@@ -305,3 +306,4 @@ sources:
       - name: pitching_2018
       - name: pitching_2019
       - name: pitching_2020
+      - name: pitching_2021

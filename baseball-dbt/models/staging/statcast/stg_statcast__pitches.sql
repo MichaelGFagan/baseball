@@ -5,29 +5,29 @@
 }}
 
 {% set start_year = 2008 %}
-{% set end_year = 2020 %}
+{% set end_year = var('current_year') %}
 
 
 with statcast as (
-            
-    {% for year in range(start_year, end_year) %}
-    
+
+    {% for year in range(start_year, end_year + 1) %}
+
         {% set table_name = 'statcast_' ~ year %}
-    
+
         {% if loop.last %}
-        
+
             {{ statcast_template() }} from {{ source('statcast', table_name) }} as source
-            
+
         {% else %}
-        
+
             {{ statcast_template() }} from {{ source('statcast', table_name) }} as source
-            
+
             union all
 
         {% endif %}
 
     {% endfor %}
-    
+
 ),
 
 chadwick as (
