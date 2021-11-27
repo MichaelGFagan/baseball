@@ -1,0 +1,19 @@
+[sqlfluff]
+dialect = bigquery
+templater = dbt
+
+[sqlfluff:templater:dbt]
+profiles_dir = ~/.dbt/
+profile = baseball-dbt
+
+[sqlfluff:rules]
+tab_space_size = 4
+max_line_length = 80
+indent_unit = space
+comma_style = leading
+
+[sqlfluff:rules:L010]
+capitalisation_policy = lower
+
+[sqlfluff:rules:L040]
+capitalisation_policy = lower

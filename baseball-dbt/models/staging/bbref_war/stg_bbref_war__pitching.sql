@@ -44,7 +44,7 @@ transformed as (
       , pitching.runs_above_avg as runs_above_average
       , pitching.runs_above_avg_adj as runs_above_average_adjusted
       , pitching.runs_above_rep as runs_above_average_multiplied_by_replacement_level_factor
-      , pitching.rpo_replacement as runs_per_out_replacemen_level
+      , pitching.rpo_replacement as runs_per_out_replacement_level
       , pitching.gr_leverage_index_avg as leverage_in_relief_appearances
       , pitching.war as wins_above_replacement
       , pitching.war_rep as replacement_pitcher_wins_above_replacement
