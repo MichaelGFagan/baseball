@@ -43,7 +43,7 @@ for year in years:
         df = rs.season_game_logs(year)
         transform_and_load(df)
     except:
-        print('Could not load Retrosheet {year}.')
+        print(f'Could not load Retrosheet {year}.')
         pass
 
 if args.playoffs:
@@ -54,7 +54,7 @@ if args.playoffs:
             df = playoff_game_log_functions[games]()
             transform_and_load(df)
         except:
-            print('Could not load Retrosheet {games}.')
+            print(f'Could not load Retrosheet {games}.')
             pass
     
     

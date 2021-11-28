@@ -277,7 +277,10 @@ renamed_columns = {
     'H/9+': 'H_9_plus',
     'HR/9+': 'HR_9_plus',
     'LOB%+': 'LOB_pct_plus',
-    'WHIP+': 'WHIP_plus'
+    'WHIP+': 'WHIP_plus',
+    'CStr%': 'CStr_pct',
+    'CSW%': 'CSW_pct',
+    'K/BB+': 'K_BB_plus'
 }
 
 for year in years:
