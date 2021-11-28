@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: stg_lahman__people
+    description: This table contains biographical information for each person in the Lahman database
+    columns:
+      - name: weight
+        description: weight in pounds
+
+      - name: height
+        description: height in inches

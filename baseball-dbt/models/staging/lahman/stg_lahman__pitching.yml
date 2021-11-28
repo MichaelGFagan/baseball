@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: stg_lahman__pitching
+    description: This table contains regular and postseason player pitching data
+    columns:
+      - name: person_id
+        tests:
+          - relationships:
+              to: ref('stg_lahman__people')
+              field: baseball_reference_id
+
+      - name: intentional_walks
+        description: null prior to 1955
+
+      - name: hit_by_pitch
+        description: null prior to 1884
+
+      - name: sacrifice_hits
+        description: null prior to 1970
+
+      - name: sacrifice_flies
+        description: null prior to 1970
+
+      - name: ground_into_double_plays
+        description: null prior to 1973

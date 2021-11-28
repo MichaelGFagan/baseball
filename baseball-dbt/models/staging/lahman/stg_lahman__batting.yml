@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: stg_lahman__batting
+    description: This table contains regular and postseason player batting data
+    columns:
+      - name: person_id
+        tests:
+          - relationships:
+              to: ref('stg_lahman__people')
+              field: baseball_reference_id

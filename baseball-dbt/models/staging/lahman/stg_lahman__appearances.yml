@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: stg_lahman__appearances
+    description: This table contains appearance data by season and team
+    columns:
+      - name: person_id
+        tests:
+          - relationships:
+              to: ref('stg_lahman__people')
+              field: baseball_reference_id
