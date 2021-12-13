@@ -5,41 +5,60 @@ sources:
     database: baseball-source
     schema: lahman
     tables:
-      - name: batting
+      - name: all_star_full
+
+      - name: appearances
         tests:
           - unique:
-              column_name: "concat(cast(yearid as string), lgid, teamid, cast(stint as string), playerid)"
-
+              column_name: "concat(cast(yearid as string), lgid, teamid, playerid)"
         columns:
           - name: yearid
             tests:
               - not_null
-
           - name: lgid
             tests:
               - not_null
-
           - name: teamid
             tests:
               - not_null
-
-          - name: stint
-            tests:
-              - not_null
-
           - name: playerid
             tests:
               - not_null
 
+      - name: awards_managers
+
+      - name: awards_players
+
+      - name: awards_share_managers
+
+      - name: awards_share_players
+
+      - name: batting
+        tests:
+          - unique:
+              column_name: "concat(cast(yearid as string), lgid, teamid, cast(stint as string), playerid)"
+        columns:
+          - name: yearid
+            tests:
+              - not_null
+          - name: lgid
+            tests:
+              - not_null
+          - name: teamid
+            tests:
+              - not_null
+          - name: stint
+            tests:
+              - not_null
+          - name: playerid
+            tests:
+              - not_null
           - name: ibb
             description: null prior to 1911
-
           - name: hbp
             description: null prior to 1884
-
           - name: sh
             description: null prior to 1894
-
           - name: sf
             description: null prior to 1911
 
@@ -47,230 +66,52 @@ sources:
         tests:
           - unique:
               column_name: "concat(cast(yearid as string), lgid, teamid, cast(stint as string), playerid)"
-
         columns:
           - name: yearid
             tests:
               - not_null
-
           - name: lgid
             tests:
               - not_null
-
           - name: teamid
             tests:
               - not_null
-
           - name: round
             tests:
               - not_null
-
           - name: playerid
             tests:
               - not_null
-
           - name: cs
             description: null prior to 1903
-
           - name: hbp
             description: null prior to 1903
-
           - name: sh
             description: null prior to 1903
-
           - name: sf
             description: null prior to 1903
-
           - name: gidp
             description: null prior to 1903
 
-      - name: pitching
-        tests:
-          - unique:
-              column_name: "concat(cast(yearid as string), lgid, teamid, cast(stint as string), playerid)"
-
-        columns:
-          - name: yearid
-            tests:
-              - not_null
-
-          - name: lgid
-            tests:
-              - not_null
-
-          - name: teamid
-            tests:
-              - not_null
-
-          - name: stint
-            tests:
-              - not_null
-
-          - name: playerid
-            tests:
-              - not_null
-
-          - name: ibb
-            description: null prior to 1955
-
-          - name: hbp
-            description: null prior to 1884
-
-          - name: sh
-            description: null prior to 1970
-
-          - name: sf
-            description: null prior to 1970
-
-          - name: gidp
-            description: null prior to 1973
-
-      - name: pitching_post
-        tests:
-          - unique:
-              column_name: "concat(cast(yearid as string), lgid, teamid, cast(stint as string), playerid)"
-
-        columns:
-          - name: yearid
-            tests:
-              - not_null
-
-          - name: lgid
-            tests:
-              - not_null
-
-          - name: teamid
-            tests:
-              - not_null
-
-          - name: stint
-            tests:
-              - not_null
-
-          - name: playerid
-            tests:
-              - not_null
-
-          - name: ibb
-            description: null prior to 1903
-
-          - name: wp
-            description: null prior to 1903
-
-          - name: hbp
-            description: null prior to 1903
-
-          - name: bk
-            description: null prior to 1903
-
-          - name: bfp
-            description: null prior to 1903
-
-          - name: sh
-            description: null prior to 1903
-
-          - name: sf
-            description: null prior to 1903
-
-          - name: gidp
-            description: null prior to 1903
+      - name: college_playing
 
       - name: fielding
         tests:
           - unique:
               column_name: "concat(cast(yearid as string), lgid, teamid, cast(stint as string), playerid)"
-
         columns:
           - name: yearid
             tests:
               - not_null
-
           - name: lgid
             tests:
               - not_null
-
           - name: teamid
             tests:
               - not_null
-
           - name: stint
             tests:
               - not_null
-
-          - name: playerid
-            tests:
-              - not_null
-
-      - name: fielding_post
-        tests:
-          - unique:
-              column_name: "concat(cast(yearid as string), lgid, teamid, cast(stint as string), playerid)"
-
-        columns:
-          - name: yearid
-            tests:
-              - not_null
-
-          - name: lgid
-            tests:
-              - not_null
-
-          - name: teamid
-            tests:
-              - not_null
-
-          - name: stint
-            tests:
-              - not_null
-
-          - name: playerid
-            tests:
-              - not_null
-
-      - name: appearances
-        tests:
-          - unique:
-              column_name: "concat(cast(yearid as string), lgid, teamid, playerid)"
-
-        columns:
-          - name: yearid
-            tests:
-              - not_null
-
-          - name: lgid
-            tests:
-              - not_null
-
-          - name: teamid
-            tests:
-              - not_null
-
-          - name: playerid
-            tests:
-              - not_null
-
-      - name: fielding_of_split
-        tests:
-          - unique:
-              column_name: "concat(cast(yearid as string), lgid, teamid, cast(stint as string), playerid)"
-
-        columns:
-          - name: yearid
-            tests:
-              - not_null
-
-          - name: lgid
-            tests:
-              - not_null
-
-          - name: teamid
-            tests:
-              - not_null
-
-          - name: stint
-            tests:
-              - not_null
-
           - name: playerid
             tests:
               - not_null
@@ -279,43 +120,67 @@ sources:
         tests:
           - unique:
               column_name: "concat(cast(yearid as string), cast(stint as string), playerid)"
-
         columns:
           - name: yearid
             tests:
               - not_null
-
           - name: stint
             tests:
               - not_null
-
           - name: playerid
             tests:
               - not_null
-
-      - name: managers
-        tests:
-          - unique:
-              column_name: "concat(playerid, cast(yearid as string), teamid, cast(inseason as string))"
-
         columns:
           - name: playerid
             tests:
               - not_null
-
           - name: yearid
             tests:
               - not_null
-
           - name: teamid
             tests:
               - not_null
 
-      - name: people
+      - name: fielding_of_split
+        tests:
+          - unique:
+              column_name: "concat(cast(yearid as string), lgid, teamid, cast(stint as string), playerid)"
         columns:
+          - name: yearid
+            tests:
+              - not_null
+          - name: lgid
+            tests:
+              - not_null
+          - name: teamid
+            tests:
+              - not_null
+          - name: stint
+            tests:
+              - not_null
           - name: playerid
             tests:
-              - unique
+              - not_null
+
+      - name: fielding_post
+        tests:
+          - unique:
+              column_name: "concat(cast(yearid as string), lgid, teamid, cast(stint as string), playerid)"
+        columns:
+          - name: yearid
+            tests:
+              - not_null
+          - name: lgid
+            tests:
+              - not_null
+          - name: teamid
+            tests:
+              - not_null
+          - name: stint
+            tests:
+              - not_null
+          - name: playerid
+            tests:
               - not_null
 
       - name: franchises
@@ -325,6 +190,93 @@ sources:
             tests:
               - unique
               - not_null
+
+      - name: hall_of_fame
+      - name: home_games
+
+      - name: managers
+        tests:
+          - unique:
+              column_name: "concat(playerid, cast(yearid as string), teamid, cast(inseason as string))"
+
+      - name: managers_half
+
+      - name: parks
+
+      - name: people
+        columns:
+          - name: playerid
+            tests:
+              - unique
+              - not_null
+
+      - name: pitching
+        tests:
+          - unique:
+              column_name: "concat(cast(yearid as string), lgid, teamid, cast(stint as string), playerid)"
+        columns:
+          - name: yearid
+            tests:
+              - not_null
+          - name: lgid
+            tests:
+              - not_null
+          - name: teamid
+            tests:
+              - not_null
+          - name: stint
+            tests:
+              - not_null
+          - name: playerid
+            tests:
+              - not_null
+          - name: ibb
+            description: null prior to 1955
+          - name: hbp
+            description: null prior to 1884
+          - name: sh
+            description: null prior to 1970
+          - name: sf
+            description: null prior to 1970
+          - name: gidp
+            description: null prior to 1973
+
+      - name: pitching_post
+        tests:
+          - unique:
+              column_name: "concat(cast(yearid as string), lgid, teamid, cast(stint as string), playerid)"
+        columns:
+          - name: yearid
+            tests:
+              - not_null
+          - name: lgid
+            tests:
+              - not_null
+          - name: teamid
+            tests:
+              - not_null
+          - name: stint
+            tests:
+              - not_null
+          - name: playerid
+            tests:
+              - not_null
+          - name: ibb
+            description: null prior to 1903
+          - name: wp
+            description: null prior to 1903
+          - name: hbp
+            description: null prior to 1903
+          - name: bk
+            description: null prior to 1903
+          - name: bfp
+            description: null prior to 1903
+          - name: sh
+            description: null prior to 1903
+          - name: sf
+            description: null prior to 1903
+          - name: gidp
+            description: null prior to 1903
 
       - name: salaries
         tests:
@@ -337,20 +289,23 @@ sources:
               column_name: playerid
               column_name: salary
 
+      - name: schools
+
+      - name: series_post
+
       - name: teams
         columns:
           - name: yearid
             tests:
               - not_null
-
           - name: lgid
             tests:
               - not_null
-
           - name: teamid
             tests:
               - not_null
-
           - name: franchid
             tests:
               - not_null
+
+      - name: teams_half 
