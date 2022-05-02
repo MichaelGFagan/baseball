@@ -67,7 +67,7 @@ leather==0.3.4
 libcst==0.3.17
 locket==0.2.1
 Logbook==1.5.3
-lxml==4.6.4
+lxml==4.6.5
 MarkupSafe==1.1.1
 mashumaro==2.5
 matplotlib==3.3.4
