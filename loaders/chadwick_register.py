@@ -51,7 +51,7 @@ pandas_gbq.to_gbq(df, table_id, project_id=project_id, if_exists='replace')
 # import pandas
 # import pandas_gbq
 # from google.oauth2 import service_account
-# from pybaseball import chadwick_register
+# from pybaseball_test import chadwick_register
 #
 # credentials = service_account.Credentials.from_service_account_file(
 #     '../bigquery_credentials.json'

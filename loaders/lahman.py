@@ -1,6 +1,6 @@
 import pandas
 import pandas_gbq
-import pybaseball.lahman
+import pybaseball_test.pybaseball.lahman
 from google.oauth2 import service_account
 
 credentials = service_account.Credentials.from_service_account_file(
@@ -32,13 +32,14 @@ tables = [
     'salaries',
     'schools',
     'series_post',
-    'teams',
+    'teams_core',
+    'teams_upstream',
     'teams_franchises',
     'teams_half'
 ]
 
 for table in tables:
-    table_df = getattr(pybaseball.lahman, table)()
+    table_df = getattr(pybaseball_test.pybaseball.lahman, table)()
     cleaned_columns = []
     for column in table_df.columns:
         if column[0].isnumeric():

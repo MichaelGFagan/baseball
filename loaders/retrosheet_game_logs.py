@@ -1,7 +1,7 @@
 import argparse
 import pandas
 import pandas_gbq
-from pybaseball import retrosheet as rs
+from pybaseball_test import retrosheet as rs
 from google.oauth2 import service_account
 
 parser = argparse.ArgumentParser(description="Load Retrosheet game log data into Google BigQuery")

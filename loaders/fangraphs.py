@@ -1,8 +1,8 @@
 import pandas
 import pandas_gbq
 import argparse
-from pybaseball import batting_stats
-from pybaseball import pitching_stats
+from pybaseball_test import batting_stats
+from pybaseball_test import pitching_stats
 from google.oauth2 import service_account
 
 parser = argparse.ArgumentParser(description="Load Fangraphs data into Google BigQuery")

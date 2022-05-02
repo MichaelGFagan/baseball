@@ -358,6 +358,16 @@ transformed as (
     left join chadwick
         on cast(source.IDfg as int64) = chadwick.fangraphs_id
 
+),
+
+final as (
+
+    select
+        {{ dbt_utils.surrogate_key(['person_id', 'year_id']) }} as player_year_id
+      , *
+
+    from transformed
+
 )
 
-select * from transformed
+select * from final

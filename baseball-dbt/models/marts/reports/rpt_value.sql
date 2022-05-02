@@ -1,60 +1,77 @@
 with bref_batting as (
 
   select
-        person_id
-      , year_id
-      , {{ same_name_agg('plate_appearances') }}
-      , {{ same_name_agg('games') }}
-      , {{ same_name_agg('innings') }}
-      , {{ same_name_agg('runs_batting') }}
-      , {{ same_name_agg('runs_baserunning') }}
-      , {{ same_name_agg('runs_ground_into_double_play') }}
-      , {{ same_name_agg('runs_fielding') }}
-      , {{ same_name_agg('runs_infield') }}
-      , {{ same_name_agg('runs_outfield') }}
-      , {{ same_name_agg('runs_catcher') }}
-      , {{ same_name_agg('runs_good_plays') }}
-      , {{ same_name_agg('runs_defense') }}
-      , {{ same_name_agg('runs_position') }}
-      , {{ same_name_agg('runs_position_pitcher_adjustment') }}
-      , {{ same_name_agg('runs_replacement') }}
-      , {{ same_name_agg('runs_above_replacement') }}
-      , {{ same_name_agg('runs_above_average') }}
-      , {{ same_name_agg('runs_above_average_offense') }}
-      , {{ same_name_agg('runs_above_average_defense') }}
-      , {{ same_name_agg('wins_above_average') }}
-      , {{ same_name_agg('wins_above_average_offense') }}
-      , {{ same_name_agg('wins_above_average_defense') }}
-      , {{ same_name_agg('wins_above_replacement') }}
-      , {{ same_name_agg('wins_above_replacement_offense') }}
-      , {{ same_name_agg('wins_above_replacement_defense') }}
-      , {{ same_name_agg('replacement_player_wins_above_replacement') }}
+        player_year_id
+      , sum(plate_appearances) as plate_appearances
+      , sum(wins_above_replacement) as war_offense_and_defense_bref
+      , sum(wins_above_replacement_offense) as war_offense_bref
+      , sum(wins_above_replacement_defense) as war_defense_bref
 
   from {{ ref('stg_bbref_war__batting') }}
 
-  group by 1, 2
+  group by 1
 
 )
 
 , bref_pitching as (
 
     select
-        person_id
-      , year_id
-      , {{ same_name_agg('games') }}
-      , {{ same_name_agg('games_started') }}
-      , {{ same_name_agg('outs_pitched') }}
-      , {{ same_name_agg('outs_pitched_as_starter') }}
-      , {{ same_name_agg('outs_pitched_as_reliever') }}
-      , {{ same_name_agg('team_defensive_runs_saved') }}
-      , {{ same_name_agg('runs_above_average') }}
-      , {{ same_name_agg('runs_above_average_adjusted') }}
-      , {{ same_name_agg('runs_above_average_multiplied_by_replacement_level_factor') }}
-      , {{ same_name_agg('runs_per_out_replacement_level') }}
-      , {{ same_name_agg('leverage_in_relief_appearances') }}
-      , {{ same_name_agg('wins_above_replacement') }}
-      , {{ same_name_agg('replacement_pitcher_wins_above_replacement') }}
+        player_year_id
+      , sum(outs_pitched) as outs_pitched
+      , sum(wins_above_replacement) as war_pitching_bref
+
+    from {{ ref('stg_bbref_war__pitching') }}
+
+    group by 1
+
+),
+
+fg_batting as (
+
+    select
+        player_year_id
+      , wins_above_replacement as war_offense_and_defense_fg
+
+    from {{ ref('base_fangraphs__batting')}}
+
+),
+
+fg_pitching as (
+
+    select
+        player_year_id
+      , wins_above_replacement as war_pitching_fg)
+
+    from {{ ref('base_fangraphs__pitching') }}
+
+),
+
+final as (
+
+    select
+        coalesce(bref_batting.player_year_id,
+                 bref_pitching.player_year_id,
+                 fg_batting.player_year_id,
+                 fg_pitching.player_year_id) as player_year_id
+      , bref_batting.plate_appearances
+      , bref_pitching.outs_pitched
+      , bref_batting.war_offense_bref
+      , bref_batting.war_defense_bref
+      , bref_batting.war_offense_and_defense_bref
+      , bref_pitching.war_pitching_bref
+      , bref_batting.war_offense_and_defense_bref + bref_pitching.war_pitching_bref as war_bref
+      , fg_batting.war_offense_and_defense_fg
+      , fg_pitching.war_pitching_fg
+      , fg_batting.war_offense_and_defense_fg + fg_pitching.war_pitching_fg as war_fg
+    
+    from bref_batting
+    full join bref_pitching
+        on bref_batting.player_year_id = bref_pitching.player_year_id
+    full join fg_batting
+        on bref_batting.player_year_id = fg_batting.player_year_id
+    full join fg_pitching
+        on bref_batting.player_year_id = fg_pitching.player_year_id
 
 )
 
-select * from bref_batting
+select * from final

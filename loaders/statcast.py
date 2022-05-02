@@ -2,7 +2,7 @@ import argparse
 import datetime
 import pandas as pd
 import pandas_gbq
-from pybaseball import statcast
+from pybaseball_test import statcast
 from google.oauth2 import service_account
 
 today = datetime.date.today()
